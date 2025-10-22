@@ -1,6 +1,6 @@
 "use client";
 
 // App Router (Routing Layer) - Re-exports logic from Pages Router
-import HomePage from "@/pages/HomePage";
+import RegisterPage from "@/pages/auth/register";
 
-export default HomePage;
+export default RegisterPage;

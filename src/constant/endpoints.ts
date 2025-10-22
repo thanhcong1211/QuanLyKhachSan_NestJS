@@ -1,0 +1,48 @@
+export const endpoints = {
+  auth: {
+    login: '/auth/signin',
+    register: '/auth/signup',
+  },
+  user: {
+    getAll: '/users',
+    create: '/users',
+    getById: (id: number) => `/users/${id}`,
+    update: (id: number) => `/users/${id}`,
+    delete: (id: number) => `/users/${id}`,
+    searchPaging: '/users/phan-trang-tim-kiem',
+    searchByName: (name: string) => `/users/search/${name}`,
+  },
+  room: {
+    getAll: '/phong-thue',
+    getById: (id: number) => `/phong-thue/${id}`,
+    getByLocation: (locationId: number) => `/phong-thue/lay-phong-theo-vi-tri?maViTri=${locationId}`,
+    search: '/phong-thue/phan-trang-tim-kiem',
+    create: '/phong-thue',
+    update: (id: number) => `/phong-thue/${id}`,
+    delete: (id: number) => `/phong-thue/${id}`,
+    uploadImage: '/phong-thue/upload-hinh-phong',
+  },
+  location: {
+    getAll: '/vi-tri',
+    search: '/vi-tri/phan-trang-tim-kiem',
+    getById: (id: number) => `/vi-tri/${id}`,
+    create: '/vi-tri',
+    update: (id: number) => `/vi-tri/${id}`,
+    delete: (id: number) => `/vi-tri/${id}`,
+    uploadImage: '/vi-tri/upload-hinh-vitri',
+  },
+  booking: {
+    getAll: '/dat-phong',
+    getById: (id: number) => `/dat-phong/${id}`,
+    create: '/dat-phong',
+    update: (id: number) => `/dat-phong/${id}`,
+    delete: (id: number) => `/dat-phong/${id}`,
+  },
+  comment: {
+    getAll: '/binh-luan',
+    getById: (id: number) => `/binh-luan/${id}`,
+    create: '/binh-luan',
+    update: (id: number) => `/binh-luan/${id}`,
+    delete: (id: number) => `/binh-luan/${id}`,
+  },
+};

@@ -1,7 +1,53 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Image configuration for external images
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'airbnbnew.cybersoft.edu.vn',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.gstatic.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'thesinhcafetouronline.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'sc04.alicdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'sc04.alicdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.alicdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**', // Cho phép mọi domain (dùng cho development)
+      },
+    ],
+  },
+
+  // Suppress ESLint during builds (optional)
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
+
+  // TypeScript configuration
+  typescript: {
+    ignoreBuildErrors: false,
+  },
 };
 
 export default nextConfig;
