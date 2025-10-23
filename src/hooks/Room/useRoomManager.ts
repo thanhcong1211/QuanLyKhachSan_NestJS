@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { roomService } from "@/services/roomService";
 import type { Room, CreateRoomRequest } from "@/types/room.type";
 import { message, Modal } from "antd";
+import { useTranslations } from "@/lib/i18n";
 import { storage } from "@/helpers/storage";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +19,8 @@ export default function useRoomManager(initialPageSize = 10) {
   const [pageSize] = useState(initialPageSize);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
+  const t = useTranslations("roomManagement");
+  const tc = useTranslations("common");
 
   // Modal & form
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,7 +74,7 @@ export default function useRoomManager(initialPageSize = 10) {
       setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
     } catch (err) {
       console.error("fetchRooms error:", err);
-      message.error("Không thể tải danh sách phòng");
+      message.error(t("errors.fetchList"));
       setRooms([]);
     } finally {
       setLoading(false);
@@ -147,20 +150,20 @@ export default function useRoomManager(initialPageSize = 10) {
 
   const handleDelete = (room: Room) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: `Bạn có chắc chắn muốn xóa phòng "${room.tenPhong}"?`,
-      okText: "Xóa",
-      cancelText: "Hủy",
+      title: tc("actions.confirm"),
+      content: t("confirmDelete").replace("{name}", room.tenPhong || "").replace("{id}", String(room.id)),
+      okText: tc("actions.delete"),
+      cancelText: tc("actions.cancel"),
       okButtonProps: { danger: true },
       onOk: async () => {
         try {
           setLoading(true);
           await roomService.delete(room.id);
-          message.success("Xóa phòng thành công!");
+          message.success(t("messages.deleteSuccess"));
           fetchRooms();
         } catch (error) {
           console.error("delete room error:", error);
-          message.error("Không thể xóa phòng");
+          message.error(t("errors.delete"));
         } finally {
           setLoading(false);
         }
@@ -172,17 +175,17 @@ export default function useRoomManager(initialPageSize = 10) {
     const userToken = storage.getToken();
     if (!userToken) {
       Modal.confirm({
-        title: 'Chưa đăng nhập',
-        content: 'Bạn chưa đăng nhập hoặc token đã hết hạn. Bạn muốn chuyển đến trang đăng nhập?',
-        okText: 'Đến đăng nhập',
-        cancelText: 'Hủy',
+        title: tc("actions.confirm"),
+        content: t("errors.notAuthenticated"),
+        okText: t("actions.goToLogin") || tc("actions.confirm"),
+        cancelText: tc("actions.cancel"),
         onOk: () => router.push('/login'),
       });
       return;
     }
 
     if (!formData.tenPhong || !formData.maViTri) {
-      message.error("Vui lòng điền đầy đủ thông tin (tên phòng và vị trí)");
+      message.error(t("errors.missingRequired"));
       return;
     }
 
@@ -195,7 +198,7 @@ export default function useRoomManager(initialPageSize = 10) {
         if (imageFile && created?.id) {
           await roomService.uploadImage(created.id, imageFile);
         }
-        message.success("Tạo phòng mới thành công!");
+        message.success(t("messages.createSuccess"));
       } else {
         if (!selectedRoom) {
           message.error("Không tìm thấy phòng cần sửa!");
@@ -205,13 +208,13 @@ export default function useRoomManager(initialPageSize = 10) {
         if (imageFile && selectedRoom.id) {
           await roomService.uploadImage(selectedRoom.id, imageFile);
         }
-        message.success("Cập nhật phòng thành công!");
+        message.success(t("messages.updateSuccess"));
       }
       setIsModalOpen(false);
       fetchRooms();
     } catch (err) {
       console.error("submit room error:", err);
-      message.error(modalMode === "create" ? "Không thể tạo phòng" : "Không thể cập nhật phòng");
+      message.error(modalMode === "create" ? t("errors.create") : t("errors.update"));
     } finally {
       setLoading(false);
     }

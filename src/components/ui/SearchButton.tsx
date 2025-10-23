@@ -2,6 +2,7 @@
 
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Tooltip } from "antd";
+import { useTranslations } from '@/lib/i18n';
 
 interface SearchButtonProps {
   onClick: () => void;
@@ -30,12 +31,14 @@ export default function SearchButton({
   loading = false,
   size = "middle",
   shape = "circle",
-  tooltip = "Tìm kiếm",
+  tooltip,
   className = "",
   disabled = false,
 }: SearchButtonProps) {
+  const t = useTranslations('common');
+  const title = tooltip ?? t('actions.search');
   return (
-    <Tooltip title={tooltip}>
+    <Tooltip title={title}>
       <Button
         onClick={onClick}
         loading={loading}
@@ -43,7 +46,7 @@ export default function SearchButton({
         type="primary"
         shape={shape}
         size={size}
-        aria-label={tooltip}
+        aria-label={title}
         className={className}
         icon={<SearchOutlined />}
         style={{ 

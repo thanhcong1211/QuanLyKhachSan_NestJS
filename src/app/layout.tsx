@@ -1,24 +1,35 @@
-"use client";
-
 // Apply Ant Design v5 patch for React 19 compatibility globally
 import '@ant-design/v5-patch-for-react-19';
-
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/api/queryClient";
-import { Provider } from "react-redux";
-import { store } from "@/redux/store";
-import MainLayout from "@/layouts/MainLayout";
 import "@/styles/globals.css";
+import { Manrope } from "next/font/google";
+import MainLayout from "@/layouts/MainLayout";
+import Providers from "@/app/Providers";
+import { cookies } from "next/headers";
+import { defaultLocale } from "@/i18n/config";
+import enMessages from "../../messages/en.json";
+import viMessages from "../../messages/vi.json";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Load the Manrope font at module scope (required by Next.js font loader)
+const manrope = Manrope({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-manrope",
+  weight: ["400", "500", "600", "700"],
+});
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Read NEXT_LOCALE cookie server-side (await per Next.js dynamic API requirement)
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get("NEXT_LOCALE");
+  const locale = (cookie?.value as string) || defaultLocale;
+  const messages = locale === "vi" ? viMessages : enMessages;
+
   return (
-    <html lang="vi">
+    <html lang={locale} className={manrope.className}>
       <body>
-        <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <MainLayout>{children}</MainLayout>
-          </QueryClientProvider>
-        </Provider>
+        <Providers initialLocale={locale} initialMessages={messages}>
+          <MainLayout>{children}</MainLayout>
+        </Providers>
       </body>
     </html>
   );

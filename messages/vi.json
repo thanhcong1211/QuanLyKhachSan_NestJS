@@ -1,0 +1,437 @@
+{
+	"localeNames": {
+		"en": "English",
+		"vi": "Tiếng Việt"
+	},
+	"aria": {
+		"switchToVietnamese": "Chuyển ngôn ngữ sang Tiếng Việt",
+		"switchToEnglish": "Chuyển ngôn ngữ sang Tiếng Anh"
+	},
+	"navbar": {
+		"brand": "airbnb",
+		"links": {
+			"home": "Nơi ở",
+			"experience": "Trải nghiệm",
+			"contact": "Liên hệ"
+		},
+		"rent": "Cho thuê chỗ ở"
+		,"userMenu": {
+			"guest": {
+				"login": "Đăng nhập",
+				"register": "Đăng ký",
+				"helpCenter": "Trung tâm hỗ trợ"
+			},
+			"admin": {
+				"role": "ADMIN",
+				"dataManagement": "Quản lý dữ liệu",
+				"manageRooms": "Quản lý phòng",
+				"manageLocations": "Quản lý vị trí",
+				"manageUsers": "Quản lý người dùng"
+			},
+			"account": {
+				"info": "Thông tin tài khoản",
+				"bookings": "Đặt phòng của tôi"
+			}
+		}
+	},
+	"footer": {
+		"title": "Khám phá",
+		"cards": {
+			"wholeHome": "Toàn bộ nhà",
+			"uniqueStays": "Chỗ ở độc đáo",
+			"worktrip": "Công tác",
+			"family": "Gia đình"
+		},
+		"support": {
+			"title": "Hỗ trợ",
+			"helpCenter": "Trung tâm trợ giúp",
+			"safetyInfo": "Thông tin an toàn"
+			,"accessibility": "Hỗ trợ cho người khuyết tật",
+			"cancellation": "Tùy chọn hủy"
+		},
+		"community": {
+			"title": "Cộng đồng",
+			"events": "Sự kiện",
+			"blog": "Blog"
+			,"partner": "Đối tác du lịch"
+		}
+		,"hosting": {
+			"title": "Đón tiếp khách",
+			"tryHosting": "Thử cho thuê nhà",
+			"resources": "Trung tâm tài nguyên",
+			"forum": "Diễn đàn cộng đồng"
+		},
+		"about": {
+			"title": "Giới thiệu",
+			"news": "Tin tức Airbnb",
+			"features": "Tính năng mới",
+			"investors": "Nhà đầu tư",
+			"careers": "Việc làm"
+		},
+		"copyright": "© {year} Airbnb clone - Được tạo bằng ❤️ bởi Bạn."
+	},
+	"common": {
+		"actions": {
+			"create": "Tạo",
+			"update": "Cập nhật",
+			"edit": "Sửa",
+			"delete": "Xóa",
+			"save": "Lưu",
+			"cancel": "Hủy",
+			"confirm": "Xác nhận",
+			"search": "Tìm kiếm",
+			"close": "Đóng",
+			"logout": "Đăng xuất"
+		},
+		"placeholders": {
+			"roomId": "Mã phòng",
+			"date": "YYYY-MM-DD",
+			"guestCount": "Số khách",
+			"keyword": "Nhập từ khóa...",
+			"keywordSearch": "Nhập từ khóa tìm kiếm..."
+		}
+		,
+		"tooltips": {
+			"enterKeyword": "Vui lòng nhập từ khóa",
+			"searchNow": "Tìm kiếm ngay",
+			"searchRooms": "Tìm kiếm phòng"
+		},
+		"messages": {
+			"searchComplete": "Hoàn tất tìm kiếm",
+			"enterKeywordAlert": "Vui lòng nhập từ khóa!",
+			"searched": "Đã tìm kiếm: {query}"
+		}
+	},
+	"notFound": {
+		"title": "Không tìm thấy trang",
+		"subtitle": "Xin lỗi, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.",
+		"backHome": "Về trang chủ",
+		"searchRooms": "Tìm kiếm phòng"
+	},
+	"bookingManagement": {
+		"title": "Quản lý đặt phòng",
+		"table": {
+			"id": "ID",
+			"room": "Phòng",
+			"checkIn": "Ngày đến",
+			"checkOut": "Ngày đi",
+			"guests": "Số khách",
+			"actions": "Hành động"
+		},
+		"modal": {
+			"createTitle": "Thêm đặt phòng",
+			"editTitle": "Cập nhật đặt phòng",
+			"roomPlaceholder": "Mã phòng",
+			"checkInPlaceholder": "Ngày đến (YYYY-MM-DD)",
+			"checkOutPlaceholder": "Ngày đi (YYYY-MM-DD)",
+			"guestsPlaceholder": "Số lượng khách"
+		},
+		"messages": {
+			"createSuccess": "Tạo đặt phòng thành công!",
+			"createError": "Không thể tạo đặt phòng",
+			"updateSuccess": "Cập nhật đặt phòng thành công!",
+			"updateError": "Cập nhật thất bại",
+			"deleteSuccess": "Xóa đặt phòng thành công!",
+			"deleteError": "Không thể xóa đặt phòng",
+			"confirmDelete": "Bạn có chắc muốn xóa đặt phòng #${id}?"
+		}
+	},
+	"room": {
+		"details": {
+			"title": "Chi tiết phòng",
+			"pricePerNight": "Giá / đêm",
+			"amenities": "Tiện nghi",
+			"reviews": "Đánh giá",
+			"bookNow": "Đặt ngay"
+		},
+		"placeholders": {
+			"searchLocation": "Bạn đi đâu?",
+			"checkIn": "Ngày đến",
+			"checkOut": "Ngày đi",
+			"guests": "Khách"
+		}
+	},
+	"auth": {
+		"login": {
+			"title": "Chào mừng trở lại",
+			"subtitle": "Đăng nhập để tiếp tục",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Mật khẩu",
+			"passwordPlaceholder": "••••••••",
+			"remember": "Ghi nhớ đăng nhập",
+			"forgot": "Quên mật khẩu?",
+			"loading": "Đang xử lý...",
+			"submit": "Đăng nhập",
+			"or": "hoặc",
+			"continueWithGoogle": "Tiếp tục với Google",
+			"continueWithFacebook": "Tiếp tục với Facebook",
+			"noAccount": "Chưa có tài khoản?",
+			"registerNow": "Đăng ký ngay",
+			"successMessage": "Đăng nhập thành công!",
+			"errorMessage": "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin!",
+			"termsIntro": "Bằng việc đăng nhập, bạn đồng ý với",
+			"terms": "Điều khoản dịch vụ",
+			"privacy": "Chính sách bảo mật",
+			"and": "và",
+			"ofUs": "của chúng tôi"
+		},
+		"register": {
+			"title": "Tạo tài khoản mới",
+			"subtitle": "Tham gia cộng đồng ngay hôm nay",
+			"nameLabel": "Họ và tên",
+			"namePlaceholder": "Nguyễn Văn A",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Mật khẩu",
+			"passwordPlaceholder": "••••••••",
+			"passwordHint": "Tối thiểu 6 ký tự",
+			"phoneLabel": "Số điện thoại",
+			"birthdayLabel": "Ngày sinh",
+			"genderLabel": "Giới tính",
+			"male": "Nam",
+			"female": "Nữ",
+			"agreeIntro": "Tôi đồng ý với",
+			"terms": "Điều khoản dịch vụ",
+			"privacy": "Chính sách bảo mật",
+			"and": "và",
+			"loading": "Đang xử lý...",
+			"submit": "Đăng ký",
+			"acceptTerms": "Bạn cần đồng ý với điều khoản dịch vụ"
+		}
+	},
+	"layout": {
+		"backgroundAlt": "Ảnh nền xác thực"
+	},
+	"home": {
+		"banner": {
+			"search": "Bắt đầu tìm kiếm"
+		},
+		"featured": "Địa điểm nổi bật",
+		"hero": {
+			"title": "Tìm nơi ở hoàn hảo",
+			"subtitle": "Khám phá những địa điểm tuyệt vời trên khắp thế giới",
+			"roomsIntro": "Hơn {count}+ chỗ ở độc đáo đang chờ bạn"
+		},
+		"explore": {
+			"shortTitle": "Khám phá:",
+			"longTitle": "Khám phá những nơi ở tuyệt vời"
+		},
+		"features": {
+			"title": "Tại sao chọn chúng tôi?",
+			"items": {
+				"locations": {
+					"title": "Địa điểm đa dạng",
+					"desc": "Hàng nghìn địa điểm trên khắp thế giới"
+				},
+				"booking": {
+					"title": "Đặt phòng dễ dàng",
+					"desc": "Quy trình đặt phòng nhanh chóng và đơn giản"
+				},
+				"support": {
+					"title": "Hỗ trợ 24/7",
+					"desc": "Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ bạn"
+				}
+			}
+		}
+	},
+	"search": {
+		"results": "Kết quả tìm kiếm",
+		"noResults": "Không có kết quả",
+		"placeholders": {
+			"location": "Chọn địa điểm...",
+			"roomSearch": "Tìm theo tên hoặc mô tả...",
+			"minPrice": "Giá thấp nhất",
+			"maxPrice": "Giá cao nhất"
+		},
+		"labels": {
+			"location": "Địa điểm",
+			"roomName": "Tên phòng",
+			"checkIn": "Nhận phòng",
+			"checkOut": "Trả phòng",
+			"guests": "Khách",
+			"filters": "Bộ lọc",
+			"amenities": "Tiện nghi",
+			"noResultsTitle": "Không tìm thấy phòng nào",
+			"noResultsDesc": "Thử điều chỉnh bộ lọc hoặc tìm từ khóa khác",
+			"clearFilters": "Xóa bộ lọc",
+			"loading": "Đang tải..."
+		},
+		"resultsHeader": {
+			"allRooms": "Tất cả phòng",
+			"roomsAt": "Phòng tại {location}",
+			"resultsFor": "Kết quả cho \"{term}\"",
+			"foundCount": "Tìm thấy {count} phòng"
+		}
+	},
+	"profile": {
+		"title": "Hồ sơ",
+		"edit": "Chỉnh sửa hồ sơ"
+	},
+	"admin": {
+		"bookingManagement": {
+			"title": "Quản lý đặt phòng"
+		},
+		"layout": {
+		"panelTitle": "Bảng quản trị",
+		"menu": {
+			"dashboard": "Bảng điều khiển",
+			"locations": "Vị trí",
+			"rooms": "Phòng",
+			"users": "Người dùng",
+			"bookings": "Đặt phòng",
+			"comments": "Bình luận"
+		},
+		"logout": "Đăng xuất",
+		"headerTitle": "Quản trị",
+		"headerUser": "Người quản trị"
+		}
+	},
+	"roomManagement": {
+		"title": "Quản lý Phòng",
+		"totalCount": "Tổng: {count} phòng",
+		"createButton": "Thêm phòng mới",
+		"placeholders": {
+			"search": "Tìm kiếm theo tên phòng, id vị trí, giá..."
+		},
+		"table": {
+			"id": "ID",
+			"image": "Hình ảnh",
+			"name": "Tên phòng",
+			"location": "Vị trí",
+			"price": "Giá",
+			"actions": "Thao tác"
+		},
+		"noData": {
+			"title": "Không có dữ liệu",
+			"subtitle": "Vui lòng thêm phòng mới hoặc thử tìm kiếm khác"
+		},
+		"pagination": "Trang {page} / {total} (Tổng {count} phòng)",
+		"modal": {
+			"createTitle": "Thêm phòng mới",
+			"editTitle": "Chỉnh sửa phòng",
+			"createButton": "Tạo mới",
+			"updateButton": "Cập nhật"
+		},
+		"form": {
+			"name": "Tên phòng",
+			"namePlaceholder": "VD: Phòng Studio gần trung tâm",
+			"location": "Mã vị trí",
+			"locationPlaceholder": "ID vị trí (ví dụ: 1)",
+			"price": "Giá tiền",
+			"pricePlaceholder": "Giá theo đêm",
+			"image": "Hình ảnh"
+		},
+		"messages": {
+			"createSuccess": "Tạo phòng mới thành công!",
+			"updateSuccess": "Cập nhật phòng thành công!",
+			"deleteSuccess": "Xóa phòng thành công!"
+		},
+		"errors": {
+			"fetchList": "Không thể tải danh sách phòng",
+			"delete": "Không thể xóa phòng",
+			"create": "Không thể tạo phòng",
+			"update": "Không thể cập nhật phòng",
+			"missingRequired": "Vui lòng điền đầy đủ thông tin (tên phòng và vị trí)",
+			"notAuthenticated": "Bạn chưa đăng nhập hoặc token đã hết hạn. Bạn muốn chuyển đến trang đăng nhập?"
+		},
+		"confirmDelete": "Bạn có chắc chắn muốn xóa phòng \"{name}\"?"
+	}
+	,
+	"locationManagement": {
+		"title": "Quản lý Vị trí",
+		"totalCount": "Tổng: {count} vị trí",
+		"createButton": "Thêm vị trí mới",
+		"placeholders": {
+			"search": "Tìm kiếm theo tên vị trí, tỉnh thành, quốc gia..."
+		},
+		"table": {
+			"id": "ID",
+			"image": "Hình ảnh",
+			"name": "Tên vị trí",
+			"province": "Tỉnh thành",
+			"country": "Quốc gia",
+			"actions": "Thao tác"
+		},
+		"noData": {
+			"title": "Không có dữ liệu",
+			"subtitle": "Vui lòng thêm vị trí mới hoặc thử tìm kiếm khác"
+		},
+		"pagination": "Trang {page} / {total} (Tổng {count} vị trí)",
+		"modal": {
+			"createTitle": "Thêm vị trí mới",
+			"editTitle": "Chỉnh sửa vị trí",
+			"createButton": "Tạo mới",
+			"updateButton": "Cập nhật"
+		},
+		"form": {
+			"name": "Tên vị trí",
+			"namePlaceholder": "VD: Thành phố Hồ Chí Minh",
+			"province": "Tỉnh thành",
+			"provincePlaceholder": "VD: Hồ Chí Minh",
+			"country": "Quốc gia",
+			"countryPlaceholder": "VD: Việt Nam",
+			"image": "Hình ảnh"
+		},
+		"messages": {
+			"createSuccess": "Tạo vị trí mới thành công!",
+			"updateSuccess": "Cập nhật vị trí thành công!",
+			"deleteSuccess": "Xóa vị trí thành công!"
+		},
+		"errors": {
+			"fetchList": "Không thể tải danh sách vị trí",
+			"delete": "Không thể xóa vị trí",
+			"create": "Không thể tạo vị trí",
+			"update": "Không thể cập nhật vị trí",
+			"missingRequired": "Vui lòng điền đầy đủ thông tin",
+			"notAuthenticated": "Bạn chưa đăng nhập hoặc token đã hết hạn. Bạn muốn chuyển đến trang đăng nhập?"
+		},
+		"confirmDelete": "Bạn có chắc chắn muốn xóa vị trí \"{name}\"?"
+	}
+	,
+	"userManagement": {
+		"title": "Quản lý Người dùng",
+		"createButton": "Thêm người dùng",
+		"table": {
+			"id": "ID",
+			"name": "Tên",
+			"email": "Email",
+			"phone": "SĐT",
+			"birthday": "Ngày sinh",
+			"role": "Role",
+			"actions": "Thao tác"
+		},
+		"noData": "Không có dữ liệu",
+		"modal": {
+			"createTitle": "Thêm người dùng",
+			"editTitle": "Chỉnh sửa người dùng",
+			"createButton": "Tạo mới",
+			"updateButton": "Cập nhật"
+		},
+		"form": {
+			"name": "Tên",
+			"namePlaceholder": "Họ và tên",
+			"email": "Email",
+			"emailPlaceholder": "your@email.com",
+			"phone": "Số điện thoại",
+			"phonePlaceholder": "0123 456 789",
+			"birthday": "Ngày sinh",
+			"role": "Role",
+			"rolePlaceholder": "USER/ADMIN"
+		},
+		"messages": {
+			"createSuccess": "Tạo người dùng thành công!",
+			"updateSuccess": "Cập nhật người dùng thành công!",
+			"deleteSuccess": "Xóa người dùng thành công!"
+		},
+		"errors": {
+			"fetchList": "Không thể tải danh sách người dùng",
+			"delete": "Không thể xóa người dùng",
+			"create": "Không thể tạo người dùng",
+			"update": "Không thể cập nhật người dùng",
+			"missingRequired": "Vui lòng nhập tên và email"
+		},
+		"confirmDelete": "Bạn có chắc chắn muốn xóa người dùng \"{name}\"?"
+	}
+}
+

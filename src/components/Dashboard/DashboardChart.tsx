@@ -20,7 +20,7 @@ import {
 import { useDashboardStats } from "@/hooks/Dashboard/useDashboardStats";
 
 export default function DashboardChart() {
-  const { chartData, chartConfig, isLoading } = useDashboardStats();
+  const { chartData, chartConfig } = useDashboardStats();
 
   return (
     <Card>

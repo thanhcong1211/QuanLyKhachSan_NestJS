@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Button from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import { Home, Search } from "lucide-react";
+import { useTranslations } from '@/lib/i18n';
 
 export default function NotFound() {
   const router = useRouter();
+  const t = useTranslations('notFound');
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -18,10 +20,10 @@ export default function NotFound() {
 
         {/* Content */}
         <h2 className="text-3xl font-bold text-gray-900 mb-4">
-          Không tìm thấy trang
+          {t('title')}
         </h2>
         <p className="text-gray-600 mb-8">
-          Xin lỗi, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.
+          {t('subtitle')}
         </p>
 
         {/* Actions */}
@@ -32,7 +34,7 @@ export default function NotFound() {
             className="gap-2"
           >
             <Home size={20} />
-            Về trang chủ
+            {t('backHome')}
           </Button>
           <Button
             onClick={() => router.push("/search")}
@@ -41,7 +43,7 @@ export default function NotFound() {
             className="gap-2"
           >
             <Search size={20} />
-            Tìm kiếm phòng
+            {t('searchRooms')}
           </Button>
         </div>
 

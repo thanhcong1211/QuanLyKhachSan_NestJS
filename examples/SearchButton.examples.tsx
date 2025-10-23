@@ -5,13 +5,15 @@
 // ============================================
 import SearchButton from "@/components/ui/SearchButton";
 import { useState } from "react";
+import { useTranslations } from '@/lib/i18n';
 
 // ============================================
 // 2. SỬ DỤNG CƠ BẢN
 // ============================================
 function BasicExample() {
+  const t = useTranslations('common');
   const handleSearch = () => {
-    console.log("Tìm kiếm!");
+    console.log(t('actions.search') + "!");
   };
 
   return <SearchButton onClick={handleSearch} />;
@@ -22,12 +24,13 @@ function BasicExample() {
 // ============================================
 function LoadingExample() {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('common');
 
   const handleSearch = async () => {
     setLoading(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 2000)); // Giả lập API
-      console.log("Tìm kiếm xong!");
+  console.log(t('messages.searchComplete'));
     } finally {
       setLoading(false);
     }
@@ -71,18 +74,19 @@ function CustomExample() {
 // ============================================
 function DisableExample() {
   const [query, setQuery] = useState("");
+  const t = useTranslations('common');
 
   return (
     <div>
       <input 
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Nhập từ khóa..."
+        placeholder={t('placeholders.keyword')}
       />
       <SearchButton 
         onClick={() => console.log(query)}
         disabled={!query.trim()}
-        tooltip={query.trim() ? "Tìm kiếm" : "Vui lòng nhập từ khóa"}
+        tooltip={query.trim() ? t('actions.search') : t('tooltips.enterKeyword')}
       />
     </div>
   );
@@ -94,10 +98,11 @@ function DisableExample() {
 function SearchForm() {
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('common');
 
   const handleSearch = async () => {
     if (!query.trim()) {
-      alert("Vui lòng nhập từ khóa!");
+      alert(t('messages.enterKeywordAlert'));
       return;
     }
 
@@ -105,8 +110,8 @@ function SearchForm() {
     try {
       // Giả lập API call
       await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log("Tìm kiếm:", query);
-      alert(`Đã tìm kiếm: ${query}`);
+  console.log(t('messages.searched', { query }));
+  alert(t('messages.searched', { query }));
     } catch (error) {
       console.error("Lỗi:", error);
       alert("Có lỗi xảy ra!");
@@ -122,14 +127,14 @@ function SearchForm() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="Nhập từ khóa tìm kiếm..."
+  placeholder={t('placeholders.keywordSearch')}
         className="flex-1 px-4 py-2 border rounded-lg"
       />
       <SearchButton 
         onClick={handleSearch}
         loading={loading}
         disabled={!query.trim()}
-        tooltip={query.trim() ? "Tìm kiếm ngay" : "Nhập từ khóa để tìm"}
+        tooltip={query.trim() ? t('tooltips.searchNow') : t('tooltips.enterKeyword')}
         size="large"
         shape="round"
       />
@@ -142,6 +147,7 @@ function SearchForm() {
 // ============================================
 function AllPropsExample() {
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('common');
 
   return (
     <SearchButton 
@@ -153,7 +159,7 @@ function AllPropsExample() {
       loading={loading}
       size="middle"
       shape="circle"
-      tooltip="Tìm kiếm phòng"
+      tooltip={t('tooltips.searchRooms')}
       className="shadow-lg hover:shadow-xl"
       disabled={false}
     />

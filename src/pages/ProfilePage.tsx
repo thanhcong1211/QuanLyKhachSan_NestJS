@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import { User, Mail, Phone, Calendar } from "lucide-react";
 

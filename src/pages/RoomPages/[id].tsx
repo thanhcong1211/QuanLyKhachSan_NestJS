@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import { useRoom } from "@/hooks/Room/useRoom";
 import RoomGallery from "@/components/room/RoomGallery";
 import RoomInfo from "@/components/room/RoomInfo";
-import RoomReview from "@/components/room/RoomReview";
+// RoomReview not used in this page; reviews are rendered by RoomReviewSection
 import RoomBookingForm from "@/components/room/RoomBookingForm";
 import { Spin } from "antd";
 import RoomAmenities from "@/components/room/RoomAmenities";

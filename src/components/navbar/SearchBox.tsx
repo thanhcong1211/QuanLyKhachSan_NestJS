@@ -1,6 +1,7 @@
 "use client";
 
 import SearchButton from "@/components/ui/SearchButton";
+import { useTranslations } from '@/lib/i18n';
 
 interface SearchBoxProps {
   onClick?: () => void;
@@ -21,6 +22,7 @@ export default function SearchBox({
   loading = false,
   className = "",
 }: SearchBoxProps) {
+  const t = useTranslations('common');
   return (
     <div className={`flex-shrink-0 px-2 ${className}`}>
       <SearchButton
@@ -28,7 +30,7 @@ export default function SearchBox({
         loading={loading}
         size="middle"
         shape="circle"
-        tooltip="Tìm kiếm"
+        tooltip={t('actions.search')}
       />
     </div>
   );

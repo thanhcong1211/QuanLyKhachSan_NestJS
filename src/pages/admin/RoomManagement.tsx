@@ -1,6 +1,7 @@
 "use client";
 import '@ant-design/v5-patch-for-react-19';
 import useRoomManager from "@/hooks/Room/useRoomManager";
+import { useTranslations } from "@/lib/i18n";
 import type { Room } from "@/types/room.type";
 import { Modal, Spin } from "antd";
 import {
@@ -14,6 +15,9 @@ import {
 } from "lucide-react";
 
 export default function RoomManagement() {
+  const t = useTranslations("roomManagement");
+  const tc = useTranslations("common");
+
   const {
     rooms,
     loading,
@@ -44,20 +48,20 @@ export default function RoomManagement() {
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Quản lý Phòng</h1>
-              <p className="text-gray-600">Tổng số: {totalRows} phòng</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("title")}</h1>
+              <p className="text-gray-600">{t("totalCount").replace("{count}", String(totalRows))}</p>
             </div>
-            <button
+              <button
               onClick={openCreate}
               className="flex items-center gap-2 bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors font-semibold"
             >
               <Plus size={20} />
-              Thêm phòng mới
+              {t("createButton")}
             </button>
           </div>
 
           {/* Search */}
-          <div className="flex gap-3">
+              <div className="flex gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
               <input
@@ -65,7 +69,7 @@ export default function RoomManagement() {
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                placeholder="Tìm kiếm theo tên phòng, id vị trí, giá..."
+                    placeholder={t("placeholders.search")}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
             </div>
@@ -73,7 +77,7 @@ export default function RoomManagement() {
               onClick={() => handleSearch()}
               className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
             >
-              Tìm kiếm
+                  {tc("actions.search")}
             </button>
           </div>
         </div>
@@ -90,12 +94,12 @@ export default function RoomManagement() {
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">ID</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Hình ảnh</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Tên phòng</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Vị trí</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Giá</th>
-                      <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">Thao tác</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.id")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.image")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.name")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.location")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.price")}</th>
+                      <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">{t("table.actions")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -131,16 +135,16 @@ export default function RoomManagement() {
                           <td className="px-6 py-4">
                             <div className="flex items-center justify-center gap-2">
                               <button
-                                onClick={() => openEdit(room)}
-                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                title="Chỉnh sửa"
-                              >
+                                  onClick={() => openEdit(room)}
+                                  className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                                  title={tc("actions.edit")}
+                                >
                                 <Edit size={18} />
                               </button>
                               <button
                                 onClick={() => handleDelete(room)}
                                 className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                title="Xóa"
+                                  title={tc("actions.delete")}
                               >
                                 <Trash2 size={18} />
                               </button>
@@ -153,8 +157,8 @@ export default function RoomManagement() {
                         <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                           <div className="flex flex-col items-center gap-2">
                             <Home size={48} className="text-gray-300" />
-                            <p className="text-lg font-medium">Không có dữ liệu</p>
-                            <p className="text-sm">Vui lòng thêm phòng mới hoặc thử tìm kiếm khác</p>
+                            <p className="text-lg font-medium">{t("noData.title")}</p>
+                            <p className="text-sm">{t("noData.subtitle")}</p>
                           </div>
                         </td>
                       </tr>
@@ -167,7 +171,7 @@ export default function RoomManagement() {
               {totalPages > 1 && (
                 <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
                   <div className="text-sm text-gray-600">
-                    Trang {pageIndex} / {totalPages} (Tổng {totalRows} phòng)
+                    {t("pagination").replace("{page}", String(pageIndex)).replace("{total}", String(totalPages)).replace("{count}", String(totalRows))}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -175,14 +179,14 @@ export default function RoomManagement() {
                       disabled={pageIndex === 1}
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      Trước
+                      {tc("actions.previous") || "Prev"}
                     </button>
                     <button
                       onClick={() => setPageIndex((prev: number) => Math.min(totalPages, prev + 1))}
                       disabled={pageIndex === totalPages}
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      Sau
+                      {tc("actions.next") || "Next"}
                     </button>
                   </div>
                 </div>
@@ -194,55 +198,55 @@ export default function RoomManagement() {
 
       {/* Modal Create/Edit */}
       <Modal
-        title={modalMode === "create" ? "Thêm phòng mới" : "Chỉnh sửa phòng"}
+        title={modalMode === "create" ? t("modal.createTitle") : t("modal.editTitle")}
         open={isModalOpen}
         onOk={submit}
         onCancel={() => setIsModalOpen(false)}
-        okText={modalMode === "create" ? "Tạo mới" : "Cập nhật"}
-        cancelText="Hủy"
+        okText={modalMode === "create" ? t("modal.createButton") : t("modal.updateButton")}
+        cancelText={tc("actions.cancel")}
         width={700}
         confirmLoading={loading}
       >
         <div className="space-y-4 py-4">
           {/* Tên phòng */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Tên phòng <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("form.name")} <span className="text-red-500">*</span></label>
             <input
               type="text"
               value={formData.tenPhong}
               onChange={(e) => setFormData({ ...formData, tenPhong: e.target.value })}
-              placeholder="VD: Phòng Studio gần trung tâm"
+              placeholder={t("form.namePlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
 
           {/* Vị trí */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Mã vị trí <span className="text-red-500">*</span></label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("form.location")} <span className="text-red-500">*</span></label>
             <input
               type="number"
               value={formData.maViTri}
               onChange={(e) => setFormData({ ...formData, maViTri: Number(e.target.value) })}
-              placeholder="ID vị trí (ví dụ: 1)"
+              placeholder={t("form.locationPlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
 
           {/* Giá */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Giá tiền</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("form.price")}</label>
             <input
               type="number"
               value={formData.giaTien}
               onChange={(e) => setFormData({ ...formData, giaTien: Number(e.target.value) })}
-              placeholder="Giá theo đêm"
+              placeholder={t("form.pricePlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
 
           {/* Hình ảnh */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Hình ảnh</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">{t("form.image")}</label>
             <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500" />
             {imagePreview && (
               <div className="mt-3">

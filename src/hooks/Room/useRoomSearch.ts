@@ -34,3 +34,15 @@ export function useRoomByLocation(locationId: number | null) {
 
   return query;
 }
+// export function useRoomsAll() {
+//   return useQuery({
+//     queryKey: ["rooms", "all"],
+//     queryFn: async () => {
+//       console.log("🌐 API Call: getAllRooms");
+//       const res = await roomApi.getAll();
+//       const data = (res as { content?: Room[] }).content || [];
+//       console.log("✅ API Response (All Rooms):", data);
+//       return data;
+//     },
+//   });
+// }

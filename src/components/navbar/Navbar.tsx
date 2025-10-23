@@ -9,6 +9,9 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/redux/store";
 import { setUser, logout as logoutAction } from "@/redux/slices/authSlice";
 import UserMenu from "./UserMenu";
+import LanguageSwitcher from "./LanguageSwitcher";
+// locale switching handled by LanguageSwitcher
+import { useTranslations } from "../../lib/i18n";
 
 interface UserInfo {
   id: number;
@@ -20,6 +23,7 @@ interface UserInfo {
 
 export default function Navbar() {
   const router = useRouter();
+  const t = useTranslations("navbar");
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   
@@ -77,7 +81,7 @@ export default function Navbar() {
               height={32}
             />
             <span className="text-xl font-semibold text-white transition-colors group-hover:text-rose-300">
-              airbnb
+              {t("brand")}
             </span>
           </div>
 
@@ -88,21 +92,21 @@ export default function Navbar() {
                 href="/page/danhsachphong" 
                 className="relative text-lg font-medium text-white pb-1 transition-colors hover:text-rose-300 group"
               >
-                <span>Nơi ở</span>
+                <span>{t("links.home")}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-300 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
                 href="/page/about" 
                 className="relative text-lg font-medium text-white pb-1 transition-colors hover:text-rose-300 group"
               >
-                <span>Trải nghiệm</span>
+                <span>{t("links.experience")}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-300 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link 
                 href="/page/contact" 
                 className="relative text-lg font-medium text-white pb-1 transition-colors hover:text-rose-300 group"
               >
-                <span>Liên hệ</span>
+                <span>{t("links.contact")}</span>
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-rose-300 transition-all duration-300 group-hover:w-full"></span>
               </Link>
             </div>
@@ -111,8 +115,14 @@ export default function Navbar() {
           {/* Right Side Actions */}
           <div className="flex items-center gap-3">
             <button className="hidden md:block text-sm font-medium text-white hover:text-rose-300 hover:bg-gray-800 px-3 py-2 rounded-lg transition-colors">
-              Cho thuê chỗ ở
+              {t("rent")}
             </button>
+
+            {/* Language switcher */}
+            <div className="flex items-center gap-2">
+              {/* LanguageSwitcher handles cookie + optional path prefix */}
+              <LanguageSwitcher />
+            </div>
 
             <UserMenu
               user={user}

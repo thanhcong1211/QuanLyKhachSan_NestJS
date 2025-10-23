@@ -119,6 +119,10 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+  /* Use Manrope loaded by next/font across the entire site. Falls back to system fonts if unavailable. */
+  html {
+    font-family: var(--font-manrope), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
   body {
     @apply bg-background text-foreground;
   }

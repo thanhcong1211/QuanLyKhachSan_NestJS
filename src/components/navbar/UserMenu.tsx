@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { User, LogOut, Home, MapPin, Users as UsersIcon, Calendar, Menu, X } from "lucide-react";
+import { useTranslations } from "../../lib/i18n";
 
 interface UserInfo {
   id: number;
@@ -20,6 +21,9 @@ interface UserMenuProps {
 
 export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: UserMenuProps) {
   const router = useRouter();
+  const t = useTranslations("navbar.userMenu");
+  // translator for global/common keys
+  const tc = useTranslations();
   const isAdmin = user?.role === "ADMIN" || user?.role === "admin";
 
   const handleNavigate = (path: string) => {
@@ -45,20 +49,20 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
               onClick={() => handleNavigate("/login")}
               className="w-full text-left px-4 py-2 text-sm font-semibold hover:bg-gray-100"
             >
-              Đăng nhập
+              {t("guest.login")}
             </button>
             <button
               onClick={() => handleNavigate("/register")}
               className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
             >
-              Đăng ký
+              {t("guest.register")}
             </button>
             <hr className="my-1" />
             <button
               onClick={() => handleNavigate("/help")}
               className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
             >
-              Trung tâm hỗ trợ
+              {t("guest.helpCenter")}
             </button>
           </div>
         )}
@@ -87,7 +91,7 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
             <p className="text-sm text-gray-500">{user.email}</p>
             {isAdmin && (
               <span className="inline-block mt-1 px-2 py-1 bg-rose-100 text-rose-600 text-xs font-semibold rounded">
-                ADMIN
+                {t("admin.role")}
               </span>
             )}
           </div>
@@ -100,32 +104,32 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <User size={16} />
-                <span>Thông tin tài khoản</span>
+                <span>{t("account.info")}</span>
               </button>
               <hr className="my-1" />
               <div className="px-4 py-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase">Quản lý dữ liệu</p>
+                <p className="text-xs font-semibold text-gray-500 uppercase">{t("admin.dataManagement")}</p>
               </div>
               <button
                 onClick={() => handleNavigate("/admin/rooms")}
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <Home size={16} />
-                <span>Quản lý phòng</span>
+                <span>{t("admin.manageRooms")}</span>
               </button>
               <button
                 onClick={() => handleNavigate("/admin/locations")}
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <MapPin size={16} />
-                <span>Quản lý vị trí</span>
+                <span>{t("admin.manageLocations")}</span>
               </button>
               <button
                 onClick={() => handleNavigate("/admin/users")}
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <UsersIcon size={16} />
-                <span>Quản lý user</span>
+                <span>{t("admin.manageUsers")}</span>
               </button>
               <hr className="my-1" />
               <button
@@ -133,7 +137,7 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
               >
                 <LogOut size={16} />
-                <span>Đăng xuất</span>
+                <span>{tc("common.actions.logout")}</span>
               </button>
             </>
           ) : (
@@ -144,14 +148,14 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <User size={16} />
-                <span>Thông tin tài khoản</span>
+                <span>{t("account.info")}</span>
               </button>
               <button
                 onClick={() => handleNavigate("/profile/bookings")}
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
               >
                 <Calendar size={16} />
-                <span>Danh sách phòng đã đặt</span>
+                <span>{t("account.bookings")}</span>
               </button>
               <hr className="my-1" />
               <button
@@ -159,7 +163,7 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
                 className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
               >
                 <LogOut size={16} />
-                <span>Đăng xuất</span>
+                <span>{tc("common.actions.logout")}</span>
               </button>
             </>
           )}

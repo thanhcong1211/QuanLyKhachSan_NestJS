@@ -1,0 +1,441 @@
+{
+	"localeNames": {
+		"en": "English",
+		"vi": "Vietnamese"
+	},
+	"aria": {
+		"switchToVietnamese": "Switch language to Vietnamese",
+		"switchToEnglish": "Switch language to English"
+	},
+	"navbar": {
+		"brand": "airbnb",
+		"links": {
+			"home": "Places",
+			"experience": "Experiences",
+			"contact": "Contact"
+		},
+		"rent": "List your place",
+		"userMenu": {
+			"guest": {
+				"login": "Log in",
+				"register": "Register",
+				"helpCenter": "Help Center"
+			},
+			"admin": {
+				"role": "ADMIN",
+				"dataManagement": "Data Management",
+				"manageRooms": "Manage rooms",
+				"manageLocations": "Manage locations",
+				"manageUsers": "Manage users"
+			},
+			"account": {
+				"info": "Account info",
+				"bookings": "My bookings"
+			}
+		}
+	},
+	"footer": {
+		"title": "Explore",
+		"cards": {
+			"wholeHome": "Whole home",
+			"uniqueStays": "Unique stays",
+			"worktrip": "Work trips",
+			"family": "Family"
+		},
+		"support": {
+			"title": "Support",
+			"helpCenter": "Help Center",
+			"safetyInfo": "Safety information"
+			,"accessibility": "Accessibility support",
+			"cancellation": "Cancellation options"
+		},
+		"community": {
+			"title": "Community",
+			"events": "Events",
+			"blog": "Blog"
+			,"partner": "Travel partners"
+		}
+		,"hosting": {
+			"title": "Hosting",
+			"tryHosting": "Try hosting",
+			"resources": "Resource center",
+			"forum": "Community forum"
+		},
+		"about": {
+			"title": "About",
+			"news": "Airbnb News",
+			"features": "New features",
+			"investors": "Investors",
+			"careers": "Careers"
+		},
+		"copyright": "© {year} Airbnb clone - Made with ❤️ by You."
+	},
+	"common": {
+		"actions": {
+			"create": "Create",
+			"update": "Update",
+			"edit": "Edit",
+			"delete": "Delete",
+			"save": "Save",
+			"cancel": "Cancel",
+			"confirm": "Confirm",
+			"search": "Search",
+			"close": "Close",
+			"logout": "Log out"
+		},
+		"placeholders": {
+			"roomId": "Room ID",
+			"date": "YYYY-MM-DD",
+			"guestCount": "Number of guests",
+			"keyword": "Enter a keyword...",
+			"keywordSearch": "Enter search keywords..."
+		}
+		,
+		"tooltips": {
+			"enterKeyword": "Please enter a keyword",
+			"searchNow": "Search now",
+			"searchRooms": "Search rooms"
+		},
+		"messages": {
+			"searchComplete": "Search complete",
+			"enterKeywordAlert": "Please enter a keyword!",
+			"searched": "Searched: {query}"
+		}
+	},
+	"notFound": {
+		"title": "Page not found",
+		"subtitle": "Sorry, the page you're looking for doesn't exist or has been moved.",
+		"backHome": "Back to home",
+		"searchRooms": "Search rooms"
+	},
+	"bookingManagement": {
+		"title": "Booking Management",
+		"table": {
+			"id": "ID",
+			"room": "Room",
+			"checkIn": "Check-in",
+			"checkOut": "Check-out",
+			"guests": "Guests",
+			"actions": "Actions"
+		},
+		"modal": {
+			"createTitle": "Create Booking",
+			"editTitle": "Update Booking",
+			"roomPlaceholder": "Room ID",
+			"checkInPlaceholder": "Check-in (YYYY-MM-DD)",
+			"checkOutPlaceholder": "Check-out (YYYY-MM-DD)",
+			"guestsPlaceholder": "Number of guests"
+		},
+		"messages": {
+			"createSuccess": "Booking created successfully!",
+			"createError": "Unable to create booking",
+			"updateSuccess": "Booking updated successfully!",
+			"updateError": "Unable to update booking",
+			"deleteSuccess": "Booking deleted successfully!",
+			"deleteError": "Unable to delete booking",
+			"confirmDelete": "Are you sure you want to delete booking #{id}?"
+		}
+	},
+	"room": {
+		"details": {
+			"title": "Room details",
+			"pricePerNight": "Price / night",
+			"amenities": "Amenities",
+			"reviews": "Reviews",
+			"bookNow": "Book now"
+		},
+		"placeholders": {
+			"searchLocation": "Where are you going?",
+			"checkIn": "Check-in",
+			"checkOut": "Check-out",
+			"guests": "Guests"
+		}
+	},
+	"auth": {
+		"login": {
+			"title": "Welcome back",
+			"subtitle": "Sign in to continue",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Password",
+			"passwordPlaceholder": "••••••••",
+			"remember": "Remember me",
+			"forgot": "Forgot password?",
+			"loading": "Processing...",
+			"submit": "Sign in",
+			"or": "or",
+			"continueWithGoogle": "Continue with Google",
+			"continueWithFacebook": "Continue with Facebook",
+			"noAccount": "Don't have an account?",
+			"registerNow": "Register now",
+			"successMessage": "Login successful!",
+			"errorMessage": "Login failed. Please check your credentials",
+			"termsIntro": "By signing in, you agree to our",
+			"terms": "Terms of Service",
+			"privacy": "Privacy Policy",
+			"and": "and",
+			"ofUs": "of us"
+		},
+		"register": {
+			"title": "Create a new account",
+			"subtitle": "Join the community today",
+			"nameLabel": "Full name",
+			"namePlaceholder": "Nguyễn Văn A",
+			"emailLabel": "Email",
+			"emailPlaceholder": "your@email.com",
+			"passwordLabel": "Password",
+			"passwordPlaceholder": "••••••••",
+			"passwordHint": "Minimum 6 characters",
+			"phoneLabel": "Phone number",
+			"birthdayLabel": "Birthday",
+			"genderLabel": "Gender",
+			"male": "Male",
+			"female": "Female",
+			"agreeIntro": "I agree to the",
+			"terms": "Terms of Service",
+			"privacy": "Privacy Policy",
+			"and": "and",
+			"loading": "Processing...",
+			"submit": "Register",
+			"acceptTerms": "You must accept the terms"
+		}
+		,
+		"layout": {
+			"backgroundAlt": "Authentication background"
+		}
+	},
+	"home": {
+		"banner": {
+			"search": "Start your search"
+		},
+		"featured": "Featured locations",
+		"hero": {
+			"title": "Find the perfect place",
+			"subtitle": "Discover amazing destinations around the world",
+			"roomsIntro": "Over {count}+ unique places waiting for you"
+		},
+		"explore": {
+			"shortTitle": "Explore:",
+			"longTitle": "Explore great places"
+		},
+		"features": {
+			"title": "Why choose us?",
+			"items": {
+				"locations": {
+					"title": "Diverse locations",
+					"desc": "Thousands of destinations around the world"
+				},
+				"booking": {
+					"title": "Easy booking",
+					"desc": "Fast and simple booking process"
+				},
+				"support": {
+					"title": "24/7 support",
+					"desc": "Our support team is always ready to help"
+				}
+			}
+		}
+	},
+	"search": {
+		"results": "Search results",
+		"noResults": "No results found",
+		"placeholders": {
+			"location": "Select a location...",
+			"roomSearch": "Search by name or description...",
+			"minPrice": "Min price",
+			"maxPrice": "Max price"
+		},
+		"labels": {
+			"location": "Location",
+			"roomName": "Room name",
+			"checkIn": "Check-in",
+			"checkOut": "Check-out",
+			"guests": "Guests",
+			"filters": "Filters",
+			"amenities": "Amenities",
+			"noResultsTitle": "No rooms found",
+			"noResultsDesc": "Try adjusting filters or search terms",
+			"clearFilters": "Clear filters",
+			"loading": "Loading..."
+		},
+		"resultsHeader": {
+			"allRooms": "All rooms",
+			"roomsAt": "Rooms at {location}",
+			"resultsFor": "Results for \"{term}\"",
+			"foundCount": "Found {count} rooms"
+		}
+	},
+	"profile": {
+		"title": "Profile",
+		"edit": "Edit profile"
+	},
+	"admin": {
+		"bookingManagement": {
+			"title": "Booking Management"
+		},
+		"layout": {
+			"panelTitle": "Admin Panel",
+			"menu": {
+				"dashboard": "Dashboard",
+				"locations": "Locations",
+				"rooms": "Rooms",
+				"users": "Users",
+				"bookings": "Bookings",
+				"comments": "Comments"
+			},
+			"logout": "Log out",
+			"headerTitle": "Administration",
+			"headerUser": "Admin User"
+		}
+	}
+	,
+	"roomManagement": {
+		"title": "Room Management",
+		"totalCount": "Total: {count} rooms",
+		"createButton": "Add new room",
+		"placeholders": {
+			"search": "Search by room name, location id, price..."
+		},
+		"table": {
+			"id": "ID",
+			"image": "Image",
+			"name": "Room name",
+			"location": "Location",
+			"price": "Price",
+			"actions": "Actions"
+		},
+		"noData": {
+			"title": "No data",
+			"subtitle": "Please add new rooms or try a different search"
+		},
+		"pagination": "Page {page} / {total} (Total {count} rooms)",
+		"modal": {
+			"createTitle": "Create Room",
+			"editTitle": "Edit Room",
+			"createButton": "Create",
+			"updateButton": "Update"
+		},
+		"form": {
+			"name": "Room name",
+			"namePlaceholder": "E.g.: Cozy studio near downtown",
+			"location": "Location ID",
+			"locationPlaceholder": "Location ID (e.g.: 1)",
+			"price": "Price",
+			"pricePlaceholder": "Price per night",
+			"image": "Image"
+		},
+		"messages": {
+			"createSuccess": "Room created successfully!",
+			"updateSuccess": "Room updated successfully!",
+			"deleteSuccess": "Room deleted successfully!"
+		},
+		"errors": {
+			"fetchList": "Unable to load room list",
+			"delete": "Unable to delete room",
+			"create": "Unable to create room",
+			"update": "Unable to update room",
+			"missingRequired": "Please fill required fields (name and location)",
+			"notAuthenticated": "You are not authenticated or session expired. Go to login?"
+		},
+		"confirmDelete": "Are you sure you want to delete room \"{name}\"?"
+	}
+	,
+	"locationManagement": {
+		"title": "Location Management",
+		"totalCount": "Total: {count} locations",
+		"createButton": "Add new location",
+		"placeholders": {
+			"search": "Search by location name, province, country..."
+		},
+		"table": {
+			"id": "ID",
+			"image": "Image",
+			"name": "Location name",
+			"province": "Province",
+			"country": "Country",
+			"actions": "Actions"
+		},
+		"noData": {
+			"title": "No data",
+			"subtitle": "Please add new locations or try a different search"
+		},
+		"pagination": "Page {page} / {total} (Total {count} locations)",
+		"modal": {
+			"createTitle": "Create Location",
+			"editTitle": "Edit Location",
+			"createButton": "Create",
+			"updateButton": "Update"
+		},
+		"form": {
+			"name": "Location name",
+			"namePlaceholder": "E.g.: Ho Chi Minh City",
+			"province": "Province",
+			"provincePlaceholder": "E.g.: Ho Chi Minh",
+			"country": "Country",
+			"countryPlaceholder": "E.g.: Vietnam",
+			"image": "Image"
+		},
+		"messages": {
+			"createSuccess": "Location created successfully!",
+			"updateSuccess": "Location updated successfully!",
+			"deleteSuccess": "Location deleted successfully!"
+		},
+		"errors": {
+			"fetchList": "Unable to load location list",
+			"delete": "Unable to delete location",
+			"create": "Unable to create location",
+			"update": "Unable to update location",
+			"missingRequired": "Please fill required fields",
+			"notAuthenticated": "You are not authenticated or session expired. Go to login?"
+		},
+		"confirmDelete": "Are you sure you want to delete location \"{name}\"?"
+	}
+	,
+	"userManagement": {
+		"title": "User Management",
+		"createButton": "Add user",
+		"table": {
+			"id": "ID",
+			"name": "Name",
+			"email": "Email",
+			"phone": "Phone",
+			"birthday": "Birthday",
+			"role": "Role",
+			"actions": "Actions"
+		},
+		"noData": "No data",
+		"modal": {
+			"createTitle": "Create User",
+			"editTitle": "Edit User",
+			"createButton": "Create",
+			"updateButton": "Update"
+		},
+		"form": {
+			"name": "Name",
+			"namePlaceholder": "Full name",
+			"email": "Email",
+			"emailPlaceholder": "your@email.com",
+			"phone": "Phone number",
+			"phonePlaceholder": "0123 456 789",
+			"birthday": "Birthday",
+			"role": "Role",
+			"rolePlaceholder": "USER/ADMIN"
+		},
+		"messages": {
+			"createSuccess": "User created successfully!",
+			"updateSuccess": "User updated successfully!",
+			"deleteSuccess": "User deleted successfully!"
+		},
+		"errors": {
+			"fetchList": "Unable to load user list",
+			"delete": "Unable to delete user",
+			"create": "Unable to create user",
+			"update": "Unable to update user",
+			"missingRequired": "Please fill name and email"
+		},
+		"confirmDelete": "Are you sure you want to delete user \"{name}\"?"
+	}
+
+}
+
+

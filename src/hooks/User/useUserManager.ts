@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { userService } from "@/services/userService";
 import type { User, UpdateUserRequest } from "@/types/user.type";
 import { message, Modal } from "antd";
+import { useTranslations } from "@/lib/i18n";
 
 export default function useUserManager(initialPageSize = 10) {
   const [users, setUsers] = useState<User[]>([]);
@@ -14,6 +15,8 @@ export default function useUserManager(initialPageSize = 10) {
   const [pageSize] = useState(initialPageSize);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
+  const t = useTranslations("userManagement");
+  const tc = useTranslations("common");
 
   // Modal & form
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,7 +57,7 @@ export default function useUserManager(initialPageSize = 10) {
       setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
     } catch (err) {
       console.error("fetchUsers error:", err);
-      message.error("Không thể tải danh sách người dùng");
+      message.error(t("errors.fetchList"));
       setUsers([]);
     } finally {
       setLoading(false);
@@ -88,20 +91,20 @@ export default function useUserManager(initialPageSize = 10) {
 
   const handleDelete = (user: User) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: `Bạn có chắc chắn muốn xóa người dùng "${user.name}"?`,
-      okText: "Xóa",
-      cancelText: "Hủy",
+      title: tc("actions.confirm"),
+      content: t("confirmDelete").replace("{name}", user.name || "").replace("{id}", String(user.id)),
+      okText: tc("actions.delete"),
+      cancelText: tc("actions.cancel"),
       okButtonProps: { danger: true },
       onOk: async () => {
         try {
           setLoading(true);
           await userService.delete(user.id);
-          message.success("Xóa người dùng thành công!");
+          message.success(t("messages.deleteSuccess"));
           fetchUsers();
         } catch (error) {
           console.error("delete user error:", error);
-          message.error("Không thể xóa người dùng");
+          message.error(t("errors.delete"));
         } finally {
           setLoading(false);
         }
@@ -111,7 +114,7 @@ export default function useUserManager(initialPageSize = 10) {
 
   const submit = async () => {
     if (!formData.name || !formData.email) {
-      message.error("Vui lòng nhập tên và email");
+      message.error(t("errors.missingRequired"));
       return;
     }
 
@@ -119,20 +122,20 @@ export default function useUserManager(initialPageSize = 10) {
     try {
       if (modalMode === "create") {
         await userService.create(formData);
-        message.success("Tạo người dùng thành công!");
+        message.success(t("messages.createSuccess"));
       } else {
         if (!selectedUser) {
           message.error("Không tìm thấy người dùng cần sửa!");
           return;
         }
   await userService.update(selectedUser.id, formData as UpdateUserRequest);
-        message.success("Cập nhật người dùng thành công!");
+        message.success(t("messages.updateSuccess"));
       }
       setIsModalOpen(false);
       fetchUsers();
     } catch (err) {
       console.error("submit user error:", err);
-      message.error(modalMode === "create" ? "Không thể tạo người dùng" : "Không thể cập nhật người dùng");
+      message.error(modalMode === "create" ? t("errors.create") : t("errors.update"));
     } finally {
       setLoading(false);
     }

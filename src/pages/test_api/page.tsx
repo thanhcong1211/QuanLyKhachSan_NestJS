@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axiosClient from "@/api/axiosClient";
 import { endpoints } from "@/constant/endpoints";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/input";
 import { 
   CheckCircle, 

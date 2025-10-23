@@ -2,6 +2,7 @@
 "use client";
 import '@ant-design/v5-patch-for-react-19';
 import useLocationManager from "@/hooks/Location/useLocationManager";
+import { useTranslations } from "@/lib/i18n";
 import type { Location } from "@/types/location.type";
 import { Modal, Spin } from "antd";
 import { 
@@ -15,6 +16,8 @@ import {
 } from "lucide-react";
 
 export default function LocationManagement() {
+  const t = useTranslations("locationManagement");
+  const tc = useTranslations("common");
   const {
     locations,
     loading,
@@ -47,16 +50,16 @@ export default function LocationManagement() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
                 <MapPin size={28} className="text-rose-500" />
-                <span>Quản lý Vị trí</span>
+                <span>{t("title")}</span>
               </h1>
-              <p className="text-gray-600">Tổng số: {totalRows} vị trí</p>
+              <p className="text-gray-600">{t("totalCount").replace("{count}", String(totalRows))}</p>
             </div>
             <button
               onClick={openCreate}
               className="flex items-center gap-2 bg-rose-500 text-white px-6 py-3 rounded-lg hover:bg-rose-600 transition-colors font-semibold"
             >
               <Plus size={20} />
-              Thêm vị trí mới
+              {t("createButton")}
             </button>
           </div>
 
@@ -69,7 +72,7 @@ export default function LocationManagement() {
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                placeholder="Tìm kiếm theo tên vị trí, tỉnh thành, quốc gia..."
+                placeholder={t("placeholders.search")}
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
             </div>
@@ -77,7 +80,7 @@ export default function LocationManagement() {
               onClick={() => handleSearch()}
               className="bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-colors font-semibold"
             >
-              Tìm kiếm
+              {tc("actions.search")}
             </button>
           </div>
         </div>
@@ -94,12 +97,12 @@ export default function LocationManagement() {
                 <table className="w-full">
                   <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">ID</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Hình ảnh</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Tên vị trí</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Tỉnh thành</th>
-                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Quốc gia</th>
-                      <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">Thao tác</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.id")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.image")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.name")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.province")}</th>
+                      <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">{t("table.country")}</th>
+                      <th className="px-6 py-4 text-center text-sm font-semibold text-gray-900">{t("table.actions")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
@@ -141,14 +144,14 @@ export default function LocationManagement() {
                               <button
                                 onClick={() => openEdit(location)}
                                 className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                title="Chỉnh sửa"
+                                title={tc("actions.edit")}
                               >
                                 <Edit size={18} />
                               </button>
                               <button
                                 onClick={() => handleDelete(location)}
                                 className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                title="Xóa"
+                                title={tc("actions.delete")}
                               >
                                 <Trash2 size={18} />
                               </button>
@@ -161,8 +164,8 @@ export default function LocationManagement() {
                         <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
                           <div className="flex flex-col items-center gap-2">
                             <MapPin size={48} className="text-gray-300" />
-                            <p className="text-lg font-medium">Không có dữ liệu</p>
-                            <p className="text-sm">Vui lòng thêm vị trí mới hoặc thử tìm kiếm khác</p>
+                            <p className="text-lg font-medium">{t("noData.title")}</p>
+                            <p className="text-sm">{t("noData.subtitle")}</p>
                           </div>
                         </td>
                       </tr>
@@ -174,8 +177,8 @@ export default function LocationManagement() {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
-                  <div className="text-sm text-gray-600">
-                    Trang {pageIndex} / {totalPages} (Tổng {totalRows} vị trí)
+                    <div className="text-sm text-gray-600">
+                    {t("pagination").replace("{page}", String(pageIndex)).replace("{total}", String(totalPages)).replace("{count}", String(totalRows))}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -183,14 +186,14 @@ export default function LocationManagement() {
                       disabled={pageIndex === 1}
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      Trước
+                      {tc("actions.previous") || "Prev"}
                     </button>
                     <button
                       onClick={() => setPageIndex((prev: number) => Math.min(totalPages, prev + 1))}
                       disabled={pageIndex === totalPages}
                       className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
-                      Sau
+                      {tc("actions.next") || "Next"}
                     </button>
                   </div>
                 </div>
@@ -202,12 +205,12 @@ export default function LocationManagement() {
 
       {/* Modal Create/Edit */}
       <Modal
-        title={modalMode === "create" ? "Thêm vị trí mới" : "Chỉnh sửa vị trí"}
+        title={modalMode === "create" ? t("modal.createTitle") : t("modal.editTitle")}
         open={isModalOpen}
         onOk={submit}
         onCancel={() => setIsModalOpen(false)}
-        okText={modalMode === "create" ? "Tạo mới" : "Cập nhật"}
-        cancelText="Hủy"
+        okText={modalMode === "create" ? t("modal.createButton") : t("modal.updateButton")}
+        cancelText={tc("actions.cancel")}
         width={600}
         confirmLoading={loading}
       >
@@ -215,13 +218,13 @@ export default function LocationManagement() {
           {/* Tên vị trí */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tên vị trí <span className="text-red-500">*</span>
+              {t("form.name")} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.tenViTri}
               onChange={(e) => setFormData({ ...formData, tenViTri: e.target.value })}
-              placeholder="VD: Thành phố Hồ Chí Minh"
+              placeholder={t("form.namePlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
@@ -229,13 +232,13 @@ export default function LocationManagement() {
           {/* Tỉnh thành */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tỉnh thành <span className="text-red-500">*</span>
+              {t("form.province")} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.tinhThanh}
               onChange={(e) => setFormData({ ...formData, tinhThanh: e.target.value })}
-              placeholder="VD: Hồ Chí Minh"
+              placeholder={t("form.provincePlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
@@ -243,13 +246,13 @@ export default function LocationManagement() {
           {/* Quốc gia */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Quốc gia <span className="text-red-500">*</span>
+              {t("form.country")} <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.quocGia}
               onChange={(e) => setFormData({ ...formData, quocGia: e.target.value })}
-              placeholder="VD: Việt Nam"
+              placeholder={t("form.countryPlaceholder")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
           </div>
@@ -257,7 +260,7 @@ export default function LocationManagement() {
           {/* Hình ảnh */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Hình ảnh
+              {t("form.image")}
             </label>
             <input
               type="file"

@@ -4,10 +4,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { message, Modal } from "antd";
 import { useState } from "react";
 import { bookingService } from "@/services/bookingService";
+import { useTranslations } from "@/lib/i18n";
 import type { Booking, CreateBookingRequest, UpdateBookingRequest } from "@/types/booking.type";
 
 export const useBookingManager = () => {
   const queryClient = useQueryClient();
+  const t = useTranslations("bookingManagement");
+  const tc = useTranslations("common");
 
   // ✅ STATE CỤC BỘ
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,12 +52,12 @@ export const useBookingManager = () => {
   const createBooking = useMutation({
     mutationFn: async (data: CreateBookingRequest) => bookingService.create(data),
     onSuccess: async () => {
-      message.success("Tạo đặt phòng thành công!");
+      message.success(t("messages.createSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["bookings"] });
       setIsModalOpen(false);
     },
     onError: () => {
-      message.error("Không thể tạo đặt phòng!");
+      message.error(t("messages.createError"));
     },
   });
 
@@ -63,12 +66,12 @@ export const useBookingManager = () => {
     mutationFn: async ({ id, data }: { id: number; data: UpdateBookingRequest }) =>
       bookingService.update(id, data),
     onSuccess: async () => {
-      message.success("Cập nhật đặt phòng thành công!");
+      message.success(t("messages.updateSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["bookings"] });
       setIsModalOpen(false);
     },
     onError: () => {
-      message.error("Cập nhật thất bại!");
+      message.error(t("messages.updateError"));
     },
   });
 
@@ -76,11 +79,11 @@ export const useBookingManager = () => {
   const deleteBooking = useMutation({
     mutationFn: async (id: number) => bookingService.delete(id),
     onSuccess: async () => {
-      message.success("Xóa đặt phòng thành công!");
+      message.success(t("messages.deleteSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
     onError: () => {
-      message.error("Không thể xóa đặt phòng!");
+      message.error(t("messages.deleteError"));
     },
   });
 
@@ -105,10 +108,10 @@ export const useBookingManager = () => {
 
   const handleDelete = (record: Booking) => {
     Modal.confirm({
-      title: "Xác nhận xóa?",
-      content: `Bạn có chắc muốn xóa đặt phòng #${record.id}?`,
-      okText: "Xóa",
-      cancelText: "Hủy",
+      title: tc("actions.confirm"),
+      content: t("messages.confirmDelete").replace("#{id}", String(record.id)).replace("${id}", String(record.id)),
+      okText: tc("actions.delete"),
+      cancelText: tc("actions.cancel"),
       okButtonProps: { danger: true },
       onOk: async () => {
         try {

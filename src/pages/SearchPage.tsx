@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import RoomCard from "@/components/RoomCard";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { roomApi } from "@/api/room.api";
 import { locationApi } from "@/api/location.api";
 import { useSearchForm } from "@/hooks/search/useSearchForm";
 import type { Room } from "@/types/room.type";
 import type { Location } from "@/types/location.type";
 import { Search, SlidersHorizontal, X, MapPin } from "lucide-react";
+import { useTranslations } from "@/lib/i18n";
 
 export default function SearchPage() {
+  const t = useTranslations("search");
   const router = useRouter();
   const searchParams = useSearchParams();
   
@@ -52,7 +54,7 @@ export default function SearchPage() {
         setIsLoading(true);
         setError(null);
         
-        console.log("🔍 Tìm kiếm phòng theo vị trí ID:", locationId);
+  console.log("🔍 Searching rooms by location ID:", locationId);
         
         // Fetch location info để lấy tên
         const locationResponse = await locationApi.getById(parseInt(locationId));
@@ -204,7 +206,7 @@ export default function SearchPage() {
           <div className="lg:col-span-3 relative" ref={dropdownRef}>
             <label className="block text-xs font-semibold text-gray-700 mb-2">
               <MapPin className="inline w-4 h-4 mr-1" />
-              Địa điểm
+              {t("labels.location")}
             </label>
             <div className="relative">
               <input
@@ -215,7 +217,7 @@ export default function SearchPage() {
                   setShowLocationDropdown(true);
                 }}
                 onFocus={() => setShowLocationDropdown(true)}
-                placeholder="Chọn địa điểm..."
+                placeholder={t("placeholders.location")}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
               
@@ -255,7 +257,7 @@ export default function SearchPage() {
                     ))
                   ) : (
                     <div className="p-4 text-center text-gray-500">
-                      Không tìm thấy địa điểm
+                      {t("noResults")}
                     </div>
                   )}
                 </div>
@@ -267,11 +269,11 @@ export default function SearchPage() {
           <div className="lg:col-span-4">
             <label className="block text-xs font-semibold text-gray-700 mb-2">
               <Search className="inline w-4 h-4 mr-1" />
-              Tên phòng
+              {t("labels.roomName")}
             </label>
             <input
               type="text"
-              placeholder="Tìm theo tên hoặc mô tả..."
+              placeholder={t("placeholders.roomSearch")}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
@@ -281,7 +283,7 @@ export default function SearchPage() {
           {/* Check-in */}
           <div className="lg:col-span-2">
             <label className="block text-xs font-semibold text-gray-700 mb-2">
-              Nhận phòng
+              {t("labels.checkIn")}
             </label>
             <input
               type="date"
@@ -295,7 +297,7 @@ export default function SearchPage() {
           {/* Check-out */}
           <div className="lg:col-span-2">
             <label className="block text-xs font-semibold text-gray-700 mb-2">
-              Trả phòng
+              {t("labels.checkOut")}
             </label>
             <input
               type="date"
@@ -309,7 +311,7 @@ export default function SearchPage() {
           {/* Guests + Search Button */}
           <div className="lg:col-span-1 flex flex-col">
             <label className="block text-xs font-semibold text-gray-700 mb-2">
-              Khách
+              {t("labels.guests")}
             </label>
             <div className="flex items-center justify-between px-3 py-2 border border-gray-300 rounded-lg">
               <button
@@ -337,13 +339,9 @@ export default function SearchPage() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 mt-4">
-          <Button
-            onClick={handleSearchSubmit}
-            size="lg"
-            className="flex-1"
-          >
+          <Button onClick={handleSearchSubmit} size="lg" className="flex-1">
             <Search className="w-4 h-4 mr-2" />
-            Tìm kiếm
+            {t("results")}
           </Button>
           <Button
             type="button"
@@ -361,7 +359,7 @@ export default function SearchPage() {
       {showFilters && (
         <div className="bg-white border rounded-xl p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold">Bộ lọc tìm kiếm</h3>
+            <h3 className="text-lg font-semibold">{t("labels.filters")}</h3>
             <button
               onClick={() => setShowFilters(false)}
               className="p-1 hover:bg-gray-100 rounded-full"
@@ -374,7 +372,7 @@ export default function SearchPage() {
             {/* Price Range */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Giá tối thiểu (₫)
+                {t("placeholders.minPrice")}
               </label>
               <input
                 type="number"
@@ -389,7 +387,7 @@ export default function SearchPage() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Giá tối đa (₫)
+                {t("placeholders.maxPrice")}
               </label>
               <input
                 type="number"
@@ -405,7 +403,7 @@ export default function SearchPage() {
             {/* Guests */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Số khách
+                {t("labels.guests")}
               </label>
               <input
                 type="number"
@@ -422,7 +420,7 @@ export default function SearchPage() {
             {/* Bedrooms */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phòng ngủ
+                {t("labels.roomName")}
               </label>
               <input
                 type="number"
@@ -440,7 +438,7 @@ export default function SearchPage() {
           {/* Amenities */}
           <div className="mt-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">
-              Tiện nghi
+              {t("labels.amenities")}
             </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -498,9 +496,9 @@ export default function SearchPage() {
 
           {/* Clear Filters */}
           {hasActiveFilters && (
-            <div className="mt-6 flex justify-end">
+              <div className="mt-6 flex justify-end">
               <Button variant="ghost" onClick={clearFilters}>
-                Xóa bộ lọc
+                {t("labels.clearFilters")}
               </Button>
             </div>
           )}
@@ -518,14 +516,14 @@ export default function SearchPage() {
           )}
         </div>
         <h1 className="text-3xl font-bold text-gray-900">
-          {locationId && locationName 
-            ? `Phòng tại ${locationName}` 
-            : searchTerm 
-            ? `Kết quả cho "${searchTerm}"` 
-            : "Tất cả phòng"}
+          {locationId && locationName
+            ? t("resultsHeader.roomsAt", { location: locationName })
+            : searchTerm
+            ? t("resultsHeader.resultsFor", { term: searchTerm })
+            : t("resultsHeader.allRooms")}
         </h1>
         <p className="text-gray-600 mt-2">
-          Tìm thấy <span className="font-semibold text-gray-900">{filteredRooms.length}</span> phòng
+          {t("resultsHeader.foundCount", { count: filteredRooms.length })}
           {locationId && <span className="text-gray-500 ml-2">(ID: {locationId})</span>}
         </p>
         {error && (
@@ -540,7 +538,7 @@ export default function SearchPage() {
         <div className="flex justify-center items-center py-20">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Đang tải...</p>
+            <p className="mt-4 text-gray-600">{t("labels.loading")}</p>
           </div>
         </div>
       ) : filteredRooms.length > 0 ? (
@@ -558,12 +556,10 @@ export default function SearchPage() {
       ) : (
         <div className="text-center py-20">
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
-            Không tìm thấy phòng nào
+            {t("labels.noResultsTitle")}
           </h3>
-          <p className="text-gray-600 mb-4">
-            Thử điều chỉnh bộ lọc hoặc tìm kiếm từ khóa khác
-          </p>
-          <Button onClick={clearFilters}>Xóa bộ lọc</Button>
+          <p className="text-gray-600 mb-4">{t("labels.noResultsDesc")}</p>
+          <Button onClick={clearFilters}>{t("labels.clearFilters")}</Button>
         </div>
       )}
     </div>

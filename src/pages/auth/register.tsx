@@ -3,13 +3,15 @@
 import { useAuth } from "@/hooks/Auth/useAuth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/input";
+import { useTranslations } from "@/lib/i18n";
 import { Loader2 } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
   const { register } = useAuth();
+  const t = useTranslations("auth.register");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,7 +28,7 @@ export default function RegisterPage() {
     setError("");
 
     if (!acceptTerms) {
-      setError("Bạn cần đồng ý với điều khoản dịch vụ");
+      setError(t("acceptTerms") || "You must accept terms");
       return;
     }
 
@@ -47,12 +49,8 @@ export default function RegisterPage() {
         <div className="bg-white rounded-2xl shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Tạo tài khoản mới
-            </h1>
-            <p className="text-gray-600">
-              Tham gia cộng đồng Airbnb ngay hôm nay
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">{t("title")}</h1>
+            <p className="text-gray-600">{t("subtitle")}</p>
           </div>
 
           {/* Error Alert */}
@@ -66,14 +64,12 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Họ và tên
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("nameLabel")}</label>
               <Input
                 type="text"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Nguyễn Văn A"
+                placeholder={t("namePlaceholder")}
                 required
                 disabled={register.isPending}
               />
@@ -81,14 +77,12 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("emailLabel")}</label>
               <Input
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="your@email.com"
+                placeholder={t("emailPlaceholder")}
                 required
                 disabled={register.isPending}
               />
@@ -96,9 +90,7 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Mật khẩu
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("passwordLabel")}</label>
               <Input
                 type="password"
                 value={form.password}
@@ -107,16 +99,12 @@ export default function RegisterPage() {
                 required
                 disabled={register.isPending}
               />
-              <p className="mt-1 text-xs text-gray-500">
-                Tối thiểu 6 ký tự
-              </p>
+                <p className="mt-1 text-xs text-gray-500">{t("passwordHint")}</p>
             </div>
 
             {/* Phone */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Số điện thoại
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("phoneLabel")}</label>
               <Input
                 type="tel"
                 value={form.phone}
@@ -130,9 +118,7 @@ export default function RegisterPage() {
             {/* Birthday & Gender */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ngày sinh
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("birthdayLabel")}</label>
                 <input
                   type="date"
                   value={form.birthday}
@@ -143,9 +129,7 @@ export default function RegisterPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Giới tính
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("genderLabel")}</label>
                 <select
                   value={form.gender ? "true" : "false"}
                   onChange={(e) =>
@@ -154,8 +138,8 @@ export default function RegisterPage() {
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
                   disabled={register.isPending}
                 >
-                  <option value="true">Nam</option>
-                  <option value="false">Nữ</option>
+                  <option value="true">{t("male")}</option>
+                  <option value="false">{t("female")}</option>
                 </select>
               </div>
             </div>
@@ -170,14 +154,10 @@ export default function RegisterPage() {
                 disabled={register.isPending}
               />
               <label className="ml-2 text-sm text-gray-600">
-                Tôi đồng ý với{" "}
-                <a href="#" className="text-rose-500 hover:underline">
-                  Điều khoản dịch vụ
-                </a>{" "}
-                và{" "}
-                <a href="#" className="text-rose-500 hover:underline">
-                  Chính sách bảo mật
-                </a>
+                {t("agreeIntro")} {" "}
+                <a href="#" className="text-rose-500 hover:underline">{t("terms")}</a>{" "}
+                {t("and")} {" "}
+                <a href="#" className="text-rose-500 hover:underline">{t("privacy")}</a>
               </label>
             </div>
 
@@ -191,10 +171,10 @@ export default function RegisterPage() {
               {register.isPending ? (
                 <>
                   <Loader2 className="animate-spin mr-2" size={20} />
-                  Đang xử lý...
+                  {t("loading")}
                 </>
               ) : (
-                "Đăng ký"
+                t("submit")
               )}
             </Button>
           </form>

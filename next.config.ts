@@ -38,11 +38,8 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
   // Suppress ESLint during builds (optional)
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
+  // If you need to suppress ESLint during builds, add a config here.
 
   // TypeScript configuration
   typescript: {

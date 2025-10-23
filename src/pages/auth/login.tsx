@@ -3,14 +3,16 @@
 import { useAuth } from "@/hooks/Auth/useAuth";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import Input from "@/components/ui/input";
+import { useTranslations } from "@/lib/i18n";
 import { Loader2 } from "lucide-react";
 import { message } from "antd";
 
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
+  const t = useTranslations("auth.login");
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
@@ -20,15 +22,15 @@ export default function LoginPage() {
     
     login.mutate(form, {
       onSuccess: () => {
-        message.success("Đăng nhập thành công! Chào mừng bạn trở lại 🎉");
+  message.success(t("successMessage") || "Login successful");
         // Delay để user thấy message trước khi redirect
         setTimeout(() => {
           router.push("/");
         }, 500);
       },
       onError: (err) => {
-        setError(err instanceof Error ? err.message : "Đăng nhập thất bại");
-        message.error("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin!");
+  setError(err instanceof Error ? err.message : t("errorMessage") || "Login failed");
+  message.error(t("errorMessage") || "Login failed");
       },
     });
   };
@@ -41,11 +43,9 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Chào mừng trở lại
+              {t("title")}
             </h1>
-            <p className="text-gray-600">
-              Đăng nhập để tiếp tục với Airbnb
-            </p>
+            <p className="text-gray-600">{t("subtitle")}</p>
           </div>
 
           {/* Error Alert */}
@@ -59,14 +59,12 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("emailLabel")}</label>
               <Input
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="your@email.com"
+                placeholder={t("emailPlaceholder")}
                 required
                 disabled={login.isPending}
               />
@@ -74,14 +72,12 @@ export default function LoginPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Mật khẩu
-              </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t("passwordLabel")}</label>
               <Input
                 type="password"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
-                placeholder="••••••••"
+                placeholder={t("passwordPlaceholder")}
                 required
                 disabled={login.isPending}
               />
@@ -94,16 +90,9 @@ export default function LoginPage() {
                   type="checkbox"
                   className="w-4 h-4 text-rose-500 border-gray-300 rounded focus:ring-rose-500"
                 />
-                <span className="ml-2 text-sm text-gray-600">
-                  Ghi nhớ đăng nhập
-                </span>
+                <span className="ml-2 text-sm text-gray-600">{t("remember")}</span>
               </label>
-              <button
-                type="button"
-                className="text-sm text-rose-500 hover:underline"
-              >
-                Quên mật khẩu?
-              </button>
+              <button type="button" className="text-sm text-rose-500 hover:underline">{t("forgot")}</button>
             </div>
 
             {/* Submit Button */}
@@ -116,10 +105,10 @@ export default function LoginPage() {
               {login.isPending ? (
                 <>
                   <Loader2 className="animate-spin mr-2" size={20} />
-                  Đang xử lý...
+                  {t("loading")}
                 </>
               ) : (
-                "Đăng nhập"
+                t("submit")
               )}
             </Button>
           </form>
@@ -127,7 +116,7 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="my-6 flex items-center">
             <div className="flex-1 border-t border-gray-300"></div>
-            <span className="px-4 text-sm text-gray-500">hoặc</span>
+            <span className="px-4 text-sm text-gray-500">{t("or")}</span>
             <div className="flex-1 border-t border-gray-300"></div>
           </div>
 
@@ -152,45 +141,31 @@ export default function LoginPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                 />
               </svg>
-              <span className="font-medium text-gray-700">
-                Tiếp tục với Google
-              </span>
+              <span className="font-medium text-gray-700">{t("continueWithGoogle")}</span>
             </button>
 
             <button className="w-full flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-3 hover:bg-gray-50 transition">
               <svg className="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
               </svg>
-              <span className="font-medium text-gray-700">
-                Tiếp tục với Facebook
-              </span>
+              <span className="font-medium text-gray-700">{t("continueWithFacebook")}</span>
             </button>
           </div>
 
           {/* Register Link */}
           <p className="mt-6 text-center text-sm text-gray-600">
-            Chưa có tài khoản?{" "}
-            <button
-              type="button"
-              onClick={() => router.push("/register")}
-              className="text-rose-500 font-semibold hover:underline"
-            >
-              Đăng ký ngay
-            </button>
+            {t("noAccount")} {" "}
+            <button type="button" onClick={() => router.push("/register")} className="text-rose-500 font-semibold hover:underline">{t("registerNow")}</button>
           </p>
         </div>
 
         {/* Footer */}
         <p className="mt-8 text-center text-xs text-gray-500">
-          Bằng việc đăng nhập, bạn đồng ý với{" "}
-          <a href="#" className="underline hover:text-gray-700">
-            Điều khoản dịch vụ
-          </a>{" "}
-          và{" "}
-          <a href="#" className="underline hover:text-gray-700">
-            Chính sách bảo mật
-          </a>{" "}
-          của chúng tôi
+          {t("termsIntro")} {" "}
+          <a href="#" className="underline hover:text-gray-700">{t("terms")}</a>{" "}
+          {t("and")} {" "}
+          <a href="#" className="underline hover:text-gray-700">{t("privacy")}</a>{" "}
+          {t("ofUs")}
         </p>
       </div>
     </div>

@@ -8,10 +8,14 @@ import { roomApi } from "@/api/room.api";
 import type { Room } from "@/types/room.type";
 import type { Location } from "@/types/location.type";
 import { MapPin, Calendar, Users } from "lucide-react";
+import { useTranslations } from "@/lib/i18n";
 import SearchButton from "@/components/ui/SearchButton";
 
 
 export default function HomePage() {
+  const t = useTranslations("home");
+  const tSearch = useTranslations("search");
+  const tCommon = useTranslations("common");
   const { handleSearch: performSearch, loading } = useSearch();
   
   // State để lưu locations và rooms từ API
@@ -179,13 +183,13 @@ export default function HomePage() {
         <div className="relative h-full flex flex-col items-center justify-center px-4">
           <div className="text-center text-white mb-8 max-w-4xl">
             <h1 className="text-5xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-              Tìm nơi ở hoàn hảo
+              {t("hero.title")}
             </h1>
             <p className="text-xl md:text-2xl mb-2 drop-shadow-md">
-              Khám phá những địa điểm tuyệt vời trên khắp thế giới
+              {t("hero.subtitle")}
             </p>
             <p className="text-lg opacity-90 drop-shadow-md">
-              Hơn {roomList.length}+ chỗ ở độc đáo đang chờ bạn
+              {t("hero.roomsIntro", { count: roomList.length })}
               {selectedLocationId && <span className="ml-2 text-sm">(Vị trí ID: {selectedLocationId})</span>}
             </p>
           </div>
@@ -208,7 +212,7 @@ export default function HomePage() {
                   setShowLocationDropdown(true);
                 }}
                 onFocus={() => setShowLocationDropdown(true)}
-                placeholder="Tìm địa điểm..."
+                placeholder={tSearch('placeholders.location')}
                 className="w-full text-sm text-gray-800 bg-transparent border-none outline-none placeholder-gray-400"
               />
 
@@ -346,7 +350,7 @@ export default function HomePage() {
                 loading={loading}
                 size="middle"
                 shape="circle"
-                tooltip="Tìm kiếm"
+                tooltip={tCommon('actions.search')}
               />
             </div>
           </div>
@@ -365,15 +369,15 @@ export default function HomePage() {
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             {selectedLocationId 
-              ? `Phòng tại ${searchQuery}` 
+              ? `${t("hero.title")} - ${searchQuery}`
               : featuredLocations.length > 0
-                ? `Khám phá:`
-                : "Khám phá những nơi ở tuyệt vời"}
+                ? t("explore.shortTitle")
+                : t("explore.longTitle")}
           </h2>
           <p className="text-sm text-gray-600">
-            {selectedLocationId 
-              ? `Tìm thấy ${locationsList.length} phòng` 
-              : `${locationsList.length} chỗ ở đang chờ bạn khám phá`}
+            {selectedLocationId
+              ? `${t("hero.roomsIntro", { count: locationsList.length })}`
+              : t("hero.roomsIntro", { count: locationsList.length })}
           </p>
         </div>
 
@@ -426,16 +430,16 @@ export default function HomePage() {
       <div className="bg-gray-50 py-12">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Tại sao chọn chúng tôi?
+            {t("features.title")}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <MapPin className="text-rose-500" size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Địa điểm đa dạng</h3>
+              <h3 className="text-xl font-semibold mb-2">{t("features.items.locations.title")}</h3>
               <p className="text-gray-600">
-                Hàng nghìn địa điểm trên khắp thế giới
+                {t("features.items.locations.desc")}
               </p>
             </div>
             
@@ -443,9 +447,9 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Calendar className="text-rose-500" size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Đặt phòng dễ dàng</h3>
+              <h3 className="text-xl font-semibold mb-2">{t("features.items.booking.title")}</h3>
               <p className="text-gray-600">
-                Quy trình đặt phòng nhanh chóng và đơn giản
+                {t("features.items.booking.desc")}
               </p>
             </div>
             
@@ -453,9 +457,9 @@ export default function HomePage() {
               <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="text-rose-500" size={32} />
               </div>
-              <h3 className="text-xl font-semibold mb-2">Hỗ trợ 24/7</h3>
+              <h3 className="text-xl font-semibold mb-2">{t("features.items.support.title")}</h3>
               <p className="text-gray-600">
-                Đội ngũ hỗ trợ luôn sẵn sàng giúp đỡ bạn
+                {t("features.items.support.desc")}
               </p>
             </div>
           </div>

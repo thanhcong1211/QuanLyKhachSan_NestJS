@@ -2,8 +2,13 @@
 
 import { Table, Button, Modal, Input, Space } from "antd";
 import { useBookingManager } from "@/hooks/Booking/useBookingManager";
+import { useTranslations } from "@/lib/i18n";
+import type { Booking } from "@/types/booking.type";
 
 export default function BookingManagementPage() {
+  const t = useTranslations("bookingManagement");
+  const tc = useTranslations("common");
+
   const {
     bookings,
     loading,
@@ -19,17 +24,17 @@ export default function BookingManagementPage() {
   } = useBookingManager();
 
   const columns = [
-    { title: "ID", dataIndex: "id" },
-    { title: "Phòng", dataIndex: "maPhong" },
-    { title: "Ngày đến", dataIndex: "ngayDen" },
-    { title: "Ngày đi", dataIndex: "ngayDi" },
-    { title: "Số khách", dataIndex: "soLuongKhach" },
+    { title: t("table.id"), dataIndex: "id" },
+    { title: t("table.room"), dataIndex: "maPhong" },
+    { title: t("table.checkIn"), dataIndex: "ngayDen" },
+    { title: t("table.checkOut"), dataIndex: "ngayDi" },
+    { title: t("table.guests"), dataIndex: "soLuongKhach" },
     {
-      title: "Hành động",
-      render: (_: any, record: any) => (
+      title: t("table.actions"),
+      render: (_: unknown, record: Booking) => (
         <Space>
-          <Button onClick={() => openEdit(record)}>Sửa</Button>
-          <Button danger onClick={() => handleDelete(record)}>Xóa</Button>
+          <Button onClick={() => openEdit(record)}>{tc("actions.edit")}</Button>
+          <Button danger onClick={() => handleDelete(record)}>{tc("actions.delete")}</Button>
         </Space>
       ),
     },
@@ -38,8 +43,8 @@ export default function BookingManagementPage() {
   return (
     <div className="p-8">
       <div className="flex justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Quản lý Đặt phòng</h2>
-        <Button type="primary" onClick={openCreate}>+ Thêm đặt phòng</Button>
+        <h2 className="text-2xl font-semibold">{t("title")}</h2>
+        <Button type="primary" onClick={openCreate}>+ {t("modal.createTitle")}</Button>
       </div>
 
       <Table
@@ -52,29 +57,29 @@ export default function BookingManagementPage() {
 
       <Modal
         open={isModalOpen}
-        title={modalMode === "create" ? "Thêm đặt phòng" : "Cập nhật đặt phòng"}
+        title={modalMode === "create" ? t("modal.createTitle") : t("modal.editTitle")}
         onCancel={() => setIsModalOpen(false)}
         onOk={submit}
       >
         <div className="space-y-3">
           <Input
-            placeholder="Mã phòng"
+            placeholder={t("modal.roomPlaceholder")}
             type="number"
             value={formData.maPhong}
             onChange={(e) => setFormData({ ...formData, maPhong: Number(e.target.value) })}
           />
           <Input
-            placeholder="Ngày đến (YYYY-MM-DD)"
+            placeholder={t("modal.checkInPlaceholder")}
             value={formData.ngayDen}
             onChange={(e) => setFormData({ ...formData, ngayDen: e.target.value })}
           />
           <Input
-            placeholder="Ngày đi (YYYY-MM-DD)"
+            placeholder={t("modal.checkOutPlaceholder")}
             value={formData.ngayDi}
             onChange={(e) => setFormData({ ...formData, ngayDi: e.target.value })}
           />
           <Input
-            placeholder="Số lượng khách"
+            placeholder={t("modal.guestsPlaceholder")}
             type="number"
             value={formData.soLuongKhach}
             onChange={(e) => setFormData({ ...formData, soLuongKhach: Number(e.target.value) })}

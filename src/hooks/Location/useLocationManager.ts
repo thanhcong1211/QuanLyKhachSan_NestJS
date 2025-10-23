@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { locationService } from "@/services/locationService";
 import type { Location } from "@/types/location.type";
 import { message, Modal } from "antd";
+import { useTranslations } from "@/lib/i18n";
 import { storage } from "@/helpers/storage";
 import { useRouter } from "next/navigation";
 
@@ -17,6 +18,8 @@ export default function useLocationManager(initialPageSize = 10) {
   const [pageSize] = useState(initialPageSize);
   const [totalPages, setTotalPages] = useState(1);
   const [totalRows, setTotalRows] = useState(0);
+  const t = useTranslations("locationManagement");
+  const tc = useTranslations("common");
 
   // Modal & form
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +58,7 @@ export default function useLocationManager(initialPageSize = 10) {
       setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
     } catch (err) {
       console.error("fetchLocations error:", err);
-      message.error("Không thể tải danh sách vị trí");
+      message.error(t("errors.fetchList"));
       setLocations([]);
     } finally {
       setLoading(false);
@@ -99,20 +102,20 @@ export default function useLocationManager(initialPageSize = 10) {
 
   const handleDelete = (loc: Location) => {
     Modal.confirm({
-      title: "Xác nhận xóa",
-      content: `Bạn có chắc chắn muốn xóa vị trí "${loc.tenViTri}"?`,
-      okText: "Xóa",
-      cancelText: "Hủy",
+      title: tc("actions.confirm"),
+      content: t("confirmDelete").replace("{name}", loc.tenViTri || "").replace("{id}", String(loc.id)),
+      okText: tc("actions.delete"),
+      cancelText: tc("actions.cancel"),
       okButtonProps: { danger: true },
       onOk: async () => {
         try {
           setLoading(true);
           await locationService.delete(loc.id);
-          message.success("Xóa vị trí thành công!");
+          message.success(t("messages.deleteSuccess"));
           fetchLocations();
         } catch (error) {
           console.error("delete error:", error);
-          message.error("Không thể xóa vị trí");
+          message.error(t("errors.delete"));
         } finally {
           setLoading(false);
         }
@@ -124,17 +127,17 @@ export default function useLocationManager(initialPageSize = 10) {
     const userToken = storage.getToken();
     if (!userToken) {
       Modal.confirm({
-        title: 'Chưa đăng nhập',
-        content: 'Bạn chưa đăng nhập hoặc token đã hết hạn. Bạn muốn chuyển đến trang đăng nhập?',
-        okText: 'Đến đăng nhập',
-        cancelText: 'Hủy',
+        title: tc("actions.confirm"),
+        content: t("errors.notAuthenticated"),
+        okText: t("actions.goToLogin") || tc("actions.confirm"),
+        cancelText: tc("actions.cancel"),
         onOk: () => router.push('/login'),
       });
       return;
     }
 
     if (!formData.tenViTri || !formData.tinhThanh || !formData.quocGia) {
-      message.error("Vui lòng điền đầy đủ thông tin");
+      message.error(t("errors.missingRequired"));
       return;
     }
 
@@ -142,20 +145,20 @@ export default function useLocationManager(initialPageSize = 10) {
     try {
       if (modalMode === "create") {
         await locationService.createWithImage(formData, imageFile || undefined);
-        message.success("Tạo vị trí mới thành công!");
+        message.success(t("messages.createSuccess"));
       } else {
         if (!selectedLocation) {
           message.error("Không tìm thấy vị trí cần sửa!");
           return;
         }
         await locationService.updateWithImage(selectedLocation.id, formData, imageFile || undefined);
-        message.success("Cập nhật vị trí thành công!");
+        message.success(t("messages.updateSuccess"));
       }
       setIsModalOpen(false);
       fetchLocations();
     } catch (err) {
       console.error("submit error:", err);
-      message.error(modalMode === "create" ? "Không thể tạo vị trí" : "Không thể cập nhật vị trí");
+      message.error(modalMode === "create" ? t("errors.create") : t("errors.update"));
     } finally {
       setLoading(false);
     }
