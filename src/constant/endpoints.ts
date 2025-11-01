@@ -8,7 +8,7 @@ export const endpoints = {
     create: '/users',
     getById: (id: number) => `/users/${id}`,
     update: (id: number) => `/users/${id}`,
-    delete: (id: number) => `/users/${id}`,
+    delete: (id: number) => `/users?id=${id}`, // Sử dụng query param thay vì path param
     searchPaging: '/users/phan-trang-tim-kiem',
     searchByName: (name: string) => `/users/search/${name}`,
   },

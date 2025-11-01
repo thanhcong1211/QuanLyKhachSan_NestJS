@@ -18,6 +18,10 @@ export const authService = {
     const user = responseData?.content?.user;
     
     console.log("🔍 Extracted:", { token: !!token, user });
+    console.log("👤 User role:", user?.role);
+    console.log("📧 User email:", user?.email);
+    console.log("� User id:", user?.id);
+    console.log("�🎫 Token preview:", token?.substring(0, 50) + "...");
     
     if (token) {
       storage.setToken(token);
@@ -31,6 +35,16 @@ export const authService = {
       store.dispatch(setUser(user as any));
       console.log("✅ User saved to localStorage & dispatched to Redux");
       console.log("📢 Redux store updated → Navbar will auto re-render with new user");
+      
+      // ⚠️ Kiểm tra quyền
+      if (user.role !== "ADMIN") {
+        console.error("❌❌❌ WARNING: User is NOT ADMIN! ❌❌❌");
+        console.error("Current role:", user.role);
+        console.error("You will NOT be able to delete/update locations!");
+        alert(`⚠️ Tài khoản của bạn có role: "${user.role}"\n\nChỉ tài khoản ADMIN mới có thể xóa/sửa location!\n\nVui lòng đăng nhập bằng tài khoản ADMIN.`);
+      } else {
+        console.log("✅✅✅ User is ADMIN - Full permissions granted! ✅✅✅");
+      }
     }
     
     return res;

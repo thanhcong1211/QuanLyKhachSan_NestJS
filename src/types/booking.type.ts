@@ -12,6 +12,7 @@ export interface CreateBookingRequest {
   ngayDen: string;
   ngayDi: string;
   soLuongKhach: number;
+  maNguoiDung: number; // ✅ THÊM USER ID
 }
 
 export type UpdateBookingRequest = Partial<CreateBookingRequest>;

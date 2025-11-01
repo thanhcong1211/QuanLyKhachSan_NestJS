@@ -35,28 +35,76 @@ export default function useUserManager(initialPageSize = 10) {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const response = await userService.getAll();
-      const data = response as { content?: User[] };
-      let usersArray = Array.isArray(data.content) ? data.content : [];
-
-      if (searchKeyword) {
-        const key = searchKeyword.toLowerCase();
-        usersArray = usersArray.filter((u) =>
-          (u.name || "").toLowerCase().includes(key) ||
-          (u.email || "").toLowerCase().includes(key) ||
-          (u.phone || "").toLowerCase().includes(key)
-        );
+      
+      // Sử dụng API phân trang từ backend
+      const response = await userService.searchPaging({
+        keyword: searchKeyword || undefined,
+        pageIndex: pageIndex,
+        pageSize: pageSize
+      });
+      
+      console.log("📊 Full API response:", response);
+      console.log("📊 Response type:", typeof response);
+      console.log("📊 Response keys:", Object.keys(response || {}));
+      
+      // Thử nhiều cấu trúc response khác nhau
+      let usersArray: User[] = [];
+      let total = 0;
+      
+      // Cấu trúc 1: { content: { data: [], totalRow: x } }
+      if (response && typeof response === 'object') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const r = response as any;
+        
+        if (r.content?.data) {
+          usersArray = Array.isArray(r.content.data) ? r.content.data : [];
+          total = r.content.totalRow || 0;
+          console.log("✅ Using structure: content.data");
+        }
+        // Cấu trúc 2: { content: [] }
+        else if (Array.isArray(r.content)) {
+          usersArray = r.content;
+          total = usersArray.length;
+          console.log("✅ Using structure: content (array)");
+        }
+        // Cấu trúc 3: { data: [], totalRow: x }
+        else if (r.data) {
+          usersArray = Array.isArray(r.data) ? r.data : [];
+          total = r.totalRow || r.total || 0;
+          console.log("✅ Using structure: data");
+        }
+        // Cấu trúc 4: Direct array
+        else if (Array.isArray(r)) {
+          usersArray = r;
+          total = usersArray.length;
+          console.log("✅ Using structure: direct array");
+        }
       }
-
-      const total = usersArray.length;
-      const start = (pageIndex - 1) * pageSize;
-      const paginated = usersArray.slice(start, start + pageSize);
-
-      setUsers(paginated);
+      
+      setUsers(usersArray);
       setTotalRows(total);
       setTotalPages(Math.max(1, Math.ceil(total / pageSize)));
+      
+      console.log("📊 Final state:", {
+        usersCount: usersArray.length,
+        totalRows: total,
+        currentPage: pageIndex,
+        pageSize: pageSize,
+        totalPages: Math.ceil(total / pageSize)
+      });
+      
+      // 🔍 LOG FIRST 3 USERS WITH THEIR IDs
+      console.log("👥 First 3 users from API:");
+      usersArray.slice(0, 3).forEach((user, idx) => {
+        console.log(`  User ${idx + 1}:`, {
+          id: user.id,
+          idType: typeof user.id,
+          name: user.name,
+          email: user.email
+        });
+      });
     } catch (err) {
-      console.error("fetchUsers error:", err);
+      console.error("❌ fetchUsers error:", err);
       message.error(t("errors.fetchList"));
       setUsers([]);
     } finally {
@@ -67,7 +115,7 @@ export default function useUserManager(initialPageSize = 10) {
   useEffect(() => {
     fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageIndex, pageSize]);
+  }, [pageIndex, pageSize, searchKeyword]);
 
   const handleSearch = (keyword?: string) => {
     if (typeof keyword === "string") setSearchKeyword(keyword);
@@ -90,21 +138,49 @@ export default function useUserManager(initialPageSize = 10) {
   };
 
   const handleDelete = (user: User) => {
+    console.log("🗑️ Attempting to delete user:", user);
+    console.log("🗑️ User ID type:", typeof user.id);
+    console.log("🗑️ User ID value:", user.id);
+    
+    // Kiểm tra user ID hợp lệ
+    if (!user.id || user.id <= 0) {
+      message.error("User ID không hợp lệ!");
+      console.error("❌ Invalid user ID:", user.id);
+      return;
+    }
+    
     Modal.confirm({
       title: tc("actions.confirm"),
-      content: t("confirmDelete").replace("{name}", user.name || "").replace("{id}", String(user.id)),
+      content: `Bạn có chắc muốn xóa user "${user.name}" (ID: ${user.id}) không?`,
       okText: tc("actions.delete"),
       cancelText: tc("actions.cancel"),
       okButtonProps: { danger: true },
       onOk: async () => {
         try {
           setLoading(true);
-          await userService.delete(user.id);
-          message.success(t("messages.deleteSuccess"));
-          fetchUsers();
+          console.log("🔄 Calling userService.delete with id:", user.id);
+          const result = await userService.delete(user.id);
+          console.log("✅ User deleted successfully, result:", result);
+          message.success(`Đã xóa user "${user.name}" thành công!`);
+          // Reload danh sách users
+          await fetchUsers();
         } catch (error) {
-          console.error("delete user error:", error);
-          message.error(t("errors.delete"));
+          console.error("❌ delete user error:", error);
+          
+          // Hiển thị message lỗi chi tiết hơn
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          console.error("❌ Error message:", errorMessage);
+          
+          if (errorMessage.includes("404") || errorMessage.includes("Not Found")) {
+            message.warning(
+              `⚠️ BACKEND KHÔNG HỖ TRỢ XÓA USER!\n\nUser "${user.name}" (ID: ${user.id}) không thể xóa vì API backend không hỗ trợ chức năng này.\n\nVui lòng liên hệ quản trị viên hệ thống.`,
+              5
+            );
+          } else if (errorMessage.includes("403") || errorMessage.includes("Forbidden")) {
+            message.error("Bạn không có quyền xóa người dùng này!");
+          } else {
+            message.error(`Xóa user thất bại: ${errorMessage}`);
+          }
         } finally {
           setLoading(false);
         }

@@ -28,6 +28,26 @@ export default function SearchPage() {
   const [locationName, setLocationName] = useState<string>("");
   const [locationsList, setLocationsList] = useState<Location[]>([]);
 
+  // load all rooms nếu không có locationId
+  useEffect(() => {
+    const fetchAllRooms = async () => {
+      try {
+        setIsLoading(true);
+        const response = await roomApi.getAll();
+        const rooms = (response as { content?: Room[] }).content || [];
+        setRoomList(rooms);
+      } catch (err) {
+        console.error("❌ Error fetching all rooms:", err);
+        setError("Không thể tải danh sách phòng");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (!locationId) {
+      fetchAllRooms();
+    }
+  }, [locationId]);
   // Fetch tất cả locations cho dropdown
   useEffect(() => {
     const fetchAllLocations = async () => {

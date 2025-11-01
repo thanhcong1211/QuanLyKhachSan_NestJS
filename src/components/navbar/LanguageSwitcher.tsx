@@ -23,14 +23,14 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className="bg-black text-white border-gray-700 hover:bg-gray-800 hover:text-rose-300">
           <Globe className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeLanguage("vi")}>🇻🇳 Tiếng Việt</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage("en")}>🇬🇧 English</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("vi")} className="text-white">🇻🇳 Tiếng Việt</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => changeLanguage("en")} className="text-white">🇬🇧 English</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

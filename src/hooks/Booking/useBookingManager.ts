@@ -20,9 +20,9 @@ export const useBookingManager = () => {
     ngayDen: "",
     ngayDi: "",
     soLuongKhach: 1,
+    maNguoiDung: 0,
   });
   const [selectedId, setSelectedId] = useState<number | null>(null);
-
   // ✅ FETCH TẤT CẢ ĐẶT PHÒNG
   const {
     data: bookings = [],
@@ -47,7 +47,6 @@ export const useBookingManager = () => {
       return [];
     },
   });
-
   // ✅ CREATE BOOKING
   const createBooking = useMutation({
     mutationFn: async (data: CreateBookingRequest) => bookingService.create(data),
@@ -89,7 +88,7 @@ export const useBookingManager = () => {
 
   // ✅ XỬ LÝ HÀNH ĐỘNG
   const openCreate = () => {
-    setFormData({ maPhong: 0, ngayDen: "", ngayDi: "", soLuongKhach: 1 });
+    setFormData({ maPhong: 0, ngayDen: "", ngayDi: "", soLuongKhach: 1, maNguoiDung: 0 });
     setModalMode("create");
     setIsModalOpen(true);
   };
@@ -101,11 +100,11 @@ export const useBookingManager = () => {
       ngayDen: record.ngayDen,
       ngayDi: record.ngayDi,
       soLuongKhach: record.soLuongKhach,
+      maNguoiDung: record.maNguoiDung,
     });
     setModalMode("edit");
     setIsModalOpen(true);
   };
-
   const handleDelete = (record: Booking) => {
     Modal.confirm({
       title: tc("actions.confirm"),
@@ -122,7 +121,6 @@ export const useBookingManager = () => {
       },
     });
   };
-
   const submit = async () => {
     if (modalMode === "create") {
       await createBooking.mutateAsync(formData);
@@ -146,5 +144,6 @@ export const useBookingManager = () => {
     openEdit,
     handleDelete,
     submit,
+    deleteBooking: deleteBooking.mutateAsync,
   };
 };

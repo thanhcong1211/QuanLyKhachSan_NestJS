@@ -23,6 +23,7 @@
 			},
 			"admin": {
 				"role": "ADMIN",
+				"dashboard": "Bảng quản trị",
 				"dataManagement": "Quản lý dữ liệu",
 				"manageRooms": "Quản lý phòng",
 				"manageLocations": "Quản lý vị trí",
@@ -136,6 +137,52 @@
 			"confirmDelete": "Bạn có chắc muốn xóa đặt phòng #${id}?"
 		}
 	},
+	"bookingPage": {
+		"title": "Lịch sử đặt phòng",
+		"subtitle": "Quản lý tất cả đặt phòng của bạn",
+		"createButton": "Đặt phòng mới",
+		"loginToView": "Vui lòng đăng nhập để xem lịch sử đặt phòng",
+		"totalBookings": "Tổng số đặt phòng",
+		"totalCost": "Tổng chi phí",
+		"bookings": "booking(s)",
+		"noBookings": "Chưa có booking nào",
+		"room": "Phòng",
+		"checkIn": "Nhận phòng",
+		"checkOut": "Trả phòng",
+		"guests": "Khách",
+		"totalPrice": "Tổng tiền",
+		"delete": "Xóa",
+		"cancel": "Hủy",
+		"loading": "Đang tải...",
+		"nights": "đêm",
+		"night": "đêm",
+		"deleteConfirm": "Bạn có chắc muốn xóa booking này?",
+		"showTotal": "Tổng {total} booking(s)",
+		"modal": {
+			"title": "Đặt phòng mới",
+			"selectRoom": "Chọn phòng",
+			"selectRoomPlaceholder": "Chọn phòng bạn muốn đặt",
+			"selectRoomError": "Vui lòng chọn phòng!",
+			"dateRange": "Chọn ngày",
+			"dateRangePlaceholder": ["Ngày nhận phòng", "Ngày trả phòng"],
+			"dateRangeError": "Vui lòng chọn ngày check-in và check-out!",
+			"guestCount": "Số lượng khách",
+			"guestCountPlaceholder": "Nhập số khách",
+			"guestCountError": "Vui lòng nhập số lượng khách!",
+			"guestCountMin": "Số lượng khách phải lớn hơn 0!",
+			"stayDuration": "Thời gian lưu trú",
+			"price": "Giá",
+			"perNight": "/ đêm",
+			"okText": "Đặt phòng",
+			"cancelText": "Hủy"
+		},
+		"messages": {
+			"bookingSuccess": "Đặt phòng thành công!",
+			"bookingError": "Đặt phòng thất bại! Vui lòng thử lại.",
+			"deleteSuccess": "Xóa booking thành công!",
+			"deleteError": "Xóa booking thất bại!"
+		}
+	},
 	"room": {
 		"details": {
 			"title": "Chi tiết phòng",
@@ -149,6 +196,19 @@
 			"checkIn": "Ngày đến",
 			"checkOut": "Ngày đi",
 			"guests": "Khách"
+		},
+		"bookingForm": {
+			"perNight": "/ đêm",
+			"reviews": "đánh giá",
+			"checkIn": "Nhận phòng",
+			"checkOut": "Trả phòng",
+			"guests": "khách",
+			"bookButton": "Đặt phòng",
+			"bookingInProgress": "Đang đặt...",
+			"estimatedTotal": "Tổng dự kiến",
+			"nights": "đêm",
+			"loginRequired": "Vui lòng đăng nhập để đặt phòng!",
+			"selectDates": "Vui lòng chọn ngày nhận và trả phòng!"
 		}
 	},
 	"auth": {

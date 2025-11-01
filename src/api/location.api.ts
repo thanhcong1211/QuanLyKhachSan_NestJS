@@ -53,7 +53,27 @@ export const locationApi = {
   },
   
   // DELETE /api/vi-tri/{id} - Xóa vị trí
-  delete: (id: number) => axiosClient.delete(endpoints.location.delete(id)),
+  delete: (id: number) => {
+    console.log("[locationApi] Deleting location id:", id);
+    console.log("[locationApi] DELETE URL:", endpoints.location.delete(id));
+    return axiosClient.delete(endpoints.location.delete(id))
+      .then((res) => {
+        console.log("[locationApi] Delete SUCCESS response:", res);
+        return res;
+      })
+      .catch((err) => {
+        console.error("[locationApi] Delete FULL ERROR object:", err);
+        console.error("[locationApi] Delete error message:", err?.message);
+        console.error("[locationApi] Delete error response:", err?.response);
+        console.error("[locationApi] Delete error response data:", err?.response?.data);
+        console.error("[locationApi] Delete error response status:", err?.response?.status);
+        
+        // Re-throw với thông tin chi tiết hơn
+        const errorMessage = err?.response?.data?.message || err?.message || "Unknown error";
+        const errorStatus = err?.response?.status || "No status";
+        throw new Error(`Delete failed (${errorStatus}): ${errorMessage}`);
+      });
+  },
   
   // POST /api/vi-tri/upload-hinh-vitri - Upload hình ảnh vị trí
   uploadImage: (formData: FormData) => 

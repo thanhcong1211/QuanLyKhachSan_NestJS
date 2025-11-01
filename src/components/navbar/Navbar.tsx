@@ -89,7 +89,7 @@ export default function Navbar() {
           <nav className="flex items-center justify-center flex-1">
             <div className="flex items-center justify-between w-full max-w-md">
               <Link 
-                href="/page/danhsachphong" 
+                href="/search" 
                 className="relative text-lg font-medium text-white pb-1 transition-colors hover:text-rose-300 group"
               >
                 <span>{t("links.home")}</span>

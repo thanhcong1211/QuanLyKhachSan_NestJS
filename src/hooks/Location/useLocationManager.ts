@@ -101,6 +101,25 @@ export default function useLocationManager(initialPageSize = 10) {
   };
 
   const handleDelete = (loc: Location) => {
+    const userStr = storage.get("user");
+    let userRole = null;
+    
+    if (userStr) {
+      try {
+        const userData = JSON.parse(userStr);
+        userRole = userData?.role;
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+    
+    // ⚠️ Kiểm tra quyền ADMIN trước khi xóa
+    if (userRole !== "ADMIN") {
+      message.error("Chỉ ADMIN mới có quyền xóa vị trí!");
+      console.warn("⚠️ User role:", userRole, "- Required: ADMIN");
+      return;
+    }
+    
     Modal.confirm({
       title: tc("actions.confirm"),
       content: t("confirmDelete").replace("{name}", loc.tenViTri || "").replace("{id}", String(loc.id)),
@@ -125,6 +144,18 @@ export default function useLocationManager(initialPageSize = 10) {
 
   const submit = async () => {
     const userToken = storage.getToken();
+    const userStr = storage.get("user");
+    let userRole = null;
+    
+    if (userStr) {
+      try {
+        const userData = JSON.parse(userStr);
+        userRole = userData?.role;
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+    
     if (!userToken) {
       Modal.confirm({
         title: tc("actions.confirm"),
@@ -133,6 +164,13 @@ export default function useLocationManager(initialPageSize = 10) {
         cancelText: tc("actions.cancel"),
         onOk: () => router.push('/login'),
       });
+      return;
+    }
+    
+    // ⚠️ Kiểm tra quyền ADMIN
+    if (userRole !== "ADMIN") {
+      message.error("Chỉ ADMIN mới có quyền thực hiện chức năng này!");
+      console.warn("⚠️ User role:", userRole, "- Required: ADMIN");
       return;
     }
 

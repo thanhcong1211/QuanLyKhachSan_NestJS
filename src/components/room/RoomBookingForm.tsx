@@ -1,19 +1,39 @@
 "use client";
 import { useState } from "react";
 import { useBooking } from "@/hooks/Booking/useBooking";
+import { useAppSelector } from "@/redux/hooks";
+import { message } from "antd";
+import { useTranslations } from "@/lib/i18n";
 
 export default function RoomBookingForm({ roomId, price }: { roomId: number; price: number }) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guest, setGuest] = useState(1);
   const { bookRoom } = useBooking();
+  const user = useAppSelector((state) => state.auth.user);
+  const t = useTranslations("room.bookingForm");
 
   const handleBook = () => {
+    if (!user?.id) {
+      message.error(t('loginRequired'));
+      return;
+    }
+
+    if (!checkIn || !checkOut) {
+      message.error(t('selectDates'));
+      return;
+    }
+
+    // Convert dates to ISO format
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+
     bookRoom.mutate({
       maPhong: roomId,
-      ngayDen: checkIn,
-      ngayDi: checkOut,
+      ngayDen: checkInDate.toISOString(),
+      ngayDi: checkOutDate.toISOString(),
       soLuongKhach: guest,
+      maNguoiDung: Number(user.id),
     });
   };
 
@@ -33,9 +53,9 @@ export default function RoomBookingForm({ roomId, price }: { roomId: number; pri
       <div className="flex items-center justify-between">
         <div>
           <div className="text-2xl font-bold">{price.toLocaleString()} ₫</div>
-          <div className="text-sm text-gray-600">/ đêm</div>
+          <div className="text-sm text-gray-600">{t('perNight')}</div>
         </div>
-        <div className="text-sm text-gray-600">4.83 · 48</div>
+        <div className="text-sm text-gray-600">4.83 · 48 {t('reviews')}</div>
       </div>
 
       <div className="mt-4 grid grid-cols-2 gap-2">
@@ -44,12 +64,14 @@ export default function RoomBookingForm({ roomId, price }: { roomId: number; pri
           value={checkIn}
           onChange={(e) => setCheckIn(e.target.value)}
           className="border p-2 rounded-lg"
+          placeholder={t('checkIn')}
         />
         <input
           type="date"
           value={checkOut}
           onChange={(e) => setCheckOut(e.target.value)}
           className="border p-2 rounded-lg"
+          placeholder={t('checkOut')}
         />
       </div>
 
@@ -59,7 +81,7 @@ export default function RoomBookingForm({ roomId, price }: { roomId: number; pri
           onChange={(e) => setGuest(Number(e.target.value))}
           className="w-full border p-2 rounded-lg"
         >
-          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} khách</option>)}
+          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {t('guests')}</option>)}
         </select>
       </div>
 
@@ -68,13 +90,13 @@ export default function RoomBookingForm({ roomId, price }: { roomId: number; pri
         className="mt-4 w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 rounded-lg transition"
         disabled={bookRoom.isPending}
       >
-        {bookRoom.isPending ? "Đang đặt..." : "Đặt phòng"}
+        {bookRoom.isPending ? t('bookingInProgress') : t('bookButton')}
       </button>
 
       <div className="mt-3 text-sm text-gray-600">
-        <div>Tổng dự kiến</div>
+        <div>{t('estimatedTotal')}</div>
         <div className="flex items-center justify-between">
-          <div>{price.toLocaleString()} ₫ x {nights} đêm</div>
+          <div>{price.toLocaleString()} ₫ x {nights} {t('nights')}</div>
           <div className="font-medium">{subtotal.toLocaleString()} ₫</div>
         </div>
       </div>

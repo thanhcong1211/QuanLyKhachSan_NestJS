@@ -1,4 +1,6 @@
 export interface Room {
+  name: string;
+  
   id: number;
   tenPhong: string;
   khach: number;

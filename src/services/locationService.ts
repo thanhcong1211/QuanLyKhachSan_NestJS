@@ -29,7 +29,15 @@ export const locationService = {
 
   // Xóa vị trí
   delete: async (id: number) => {
-    return await locationApi.delete(id);
+    console.log("[locationService] Deleting location with id:", id);
+    try {
+      const response = await locationApi.delete(id);
+      console.log("[locationService] Delete response:", response);
+      return response;
+    } catch (error) {
+      console.error("[locationService] Delete error details:", error);
+      throw error;
+    }
   },
 
   // Upload hình ảnh vị trí

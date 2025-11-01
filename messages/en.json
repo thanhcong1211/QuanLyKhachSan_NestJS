@@ -23,6 +23,7 @@
 			},
 			"admin": {
 				"role": "ADMIN",
+				"dashboard": "Dashboard",
 				"dataManagement": "Data Management",
 				"manageRooms": "Manage rooms",
 				"manageLocations": "Manage locations",
@@ -136,6 +137,52 @@
 			"confirmDelete": "Are you sure you want to delete booking #{id}?"
 		}
 	},
+	"bookingPage": {
+		"title": "Booking History",
+		"subtitle": "Manage all your bookings",
+		"createButton": "New Booking",
+		"loginToView": "Please login to view booking history",
+		"totalBookings": "Total bookings",
+		"totalCost": "Total cost",
+		"bookings": "booking(s)",
+		"noBookings": "No bookings yet",
+		"room": "Room",
+		"checkIn": "Check-in",
+		"checkOut": "Check-out",
+		"guests": "Guests",
+		"totalPrice": "Total Price",
+		"delete": "Delete",
+		"cancel": "Cancel",
+		"loading": "Loading...",
+		"nights": "nights",
+		"night": "night",
+		"deleteConfirm": "Are you sure you want to delete this booking?",
+		"showTotal": "Total {total} booking(s)",
+		"modal": {
+			"title": "New Booking",
+			"selectRoom": "Select Room",
+			"selectRoomPlaceholder": "Choose the room you want to book",
+			"selectRoomError": "Please select a room!",
+			"dateRange": "Select Dates",
+			"dateRangePlaceholder": ["Check-in date", "Check-out date"],
+			"dateRangeError": "Please select check-in and check-out dates!",
+			"guestCount": "Number of Guests",
+			"guestCountPlaceholder": "Enter number of guests",
+			"guestCountError": "Please enter number of guests!",
+			"guestCountMin": "Number of guests must be greater than 0!",
+			"stayDuration": "Stay Duration",
+			"price": "Price",
+			"perNight": "/ night",
+			"okText": "Book Now",
+			"cancelText": "Cancel"
+		},
+		"messages": {
+			"bookingSuccess": "Booking successful!",
+			"bookingError": "Booking failed! Please try again.",
+			"deleteSuccess": "Booking deleted successfully!",
+			"deleteError": "Failed to delete booking!"
+		}
+	},
 	"room": {
 		"details": {
 			"title": "Room details",
@@ -149,6 +196,19 @@
 			"checkIn": "Check-in",
 			"checkOut": "Check-out",
 			"guests": "Guests"
+		},
+		"bookingForm": {
+			"perNight": "/ night",
+			"reviews": "reviews",
+			"checkIn": "Check-in",
+			"checkOut": "Check-out",
+			"guests": "guests",
+			"bookButton": "Book",
+			"bookingInProgress": "Booking...",
+			"estimatedTotal": "Estimated total",
+			"nights": "nights",
+			"loginRequired": "Please login to book a room!",
+			"selectDates": "Please select check-in and check-out dates!"
 		}
 	},
 	"auth": {
