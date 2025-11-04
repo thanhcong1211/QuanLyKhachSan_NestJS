@@ -10,6 +10,7 @@ import type { Location } from "@/types/location.type";
 import { MapPin, Calendar, Users } from "lucide-react";
 import { useTranslations } from "@/lib/i18n";
 import SearchButton from "@/components/ui/SearchButton";
+import { Label } from "recharts";
 
 
 export default function HomePage() {
@@ -202,7 +203,7 @@ export default function HomePage() {
               ref={dropdownRef}
             >
               <p className="text-xs font-semibold text-gray-700 mb-1">
-                Địa điểm
+                {tSearch("labels.location")}
               </p>
               <input
                 type="text"
@@ -289,7 +290,7 @@ export default function HomePage() {
             {/* Nhận phòng */}
             <div className="flex-1 px-4 py-3 border-r border-gray-300">
               <p className="text-xs font-semibold text-gray-700 mb-1">
-                Nhận phòng
+                {tSearch("labels.checkIn")}
               </p>
               <input
                 type="date"
@@ -303,7 +304,7 @@ export default function HomePage() {
             {/* Trả phòng */}
             <div className="flex-1 px-4 py-3 border-r border-gray-300">
               <p className="text-xs font-semibold text-gray-700 mb-1">
-                Trả phòng
+                {tSearch("labels.checkOut")}
               </p>
               <input
                 type="date"
@@ -316,7 +317,7 @@ export default function HomePage() {
 
             {/* Khách */}
             <div className="flex-1 px-4 py-3 border-r border-gray-300">
-              <p className="text-xs font-semibold text-gray-700 mb-1">Khách</p>
+              <p className="text-xs font-semibold text-gray-700 mb-1">{tSearch("labels.guests")} </p>
               <div className="flex items-center space-x-1">
                 <button
                   onClick={decrementGuests}

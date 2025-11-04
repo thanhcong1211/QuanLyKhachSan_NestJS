@@ -115,21 +115,64 @@
 	},
 	"bookingManagement": {
 		"title": "Booking Management",
+		"subtitle": "Manage all bookings",
+		"search": {
+			"name": "🔍 Search by name",
+			"email": "📧 Search by email",
+			"placeholderName": "Enter booker's name...",
+			"placeholderEmail": "Enter booker's email..."
+		},
+		"resultsCount": "{count} results",
+		"stats": {
+			"found": "FOUND BOOKINGS",
+			"total": "TOTAL BOOKINGS",
+			"revenueFiltered": "REVENUE (FILTERED)",
+			"totalRevenue": "TOTAL REVENUE",
+			"avgPerBooking": "AVG REVENUE/BOOKING"
+		},
 		"table": {
 			"id": "ID",
+			"user": "User",
 			"room": "Room",
+			"time": "Time",
 			"checkIn": "Check-in",
 			"checkOut": "Check-out",
 			"guests": "Guests",
+			"price": "Price",
 			"actions": "Actions"
 		},
 		"modal": {
 			"createTitle": "Create Booking",
 			"editTitle": "Update Booking",
+			"okCreate": "Create booking",
+			"okEdit": "Update booking",
+			"cancel": "Cancel",
 			"roomPlaceholder": "Room ID",
 			"checkInPlaceholder": "Check-in (YYYY-MM-DD)",
 			"checkOutPlaceholder": "Check-out (YYYY-MM-DD)",
-			"guestsPlaceholder": "Number of guests"
+			"guestsPlaceholder": "Number of guests",
+			"fields": {
+				"room": "Room",
+				"roomPlaceholder": "Select a room",
+				"dateRange": "Select dates",
+				"datePlaceholderStart": "Check-in date",
+				"datePlaceholderEnd": "Check-out date",
+				"guests": "Guests",
+				"guestsPlaceholder": "Enter number of guests"
+			}
+		},
+		"pagination": {
+			"showTotal": "{total} booking(s)"
+		},
+		"unknown": "Unknown",
+		"nights": "nights",
+		"perNight": "/ night",
+		"summary": {
+			"title": "Booking summary",
+			"room": "Room:",
+			"nights": "Nights:",
+			"pricePerNight": "Price/night:",
+			"total": "Total:"
 		},
 		"messages": {
 			"createSuccess": "Booking created successfully!",
@@ -353,6 +396,16 @@
 		}
 	}
 	,
+	"dashboardManagement": {
+		"title": "Dashboard",
+		"subtitle": "System overview and key metrics",
+		"stats": {
+			"rooms": "Total rooms",
+			"users": "Total users",
+			"bookings": "Total bookings",
+			"revenue": "Total revenue"
+		}
+	},
 	"roomManagement": {
 		"title": "Room Management",
 		"totalCount": "Total: {count} rooms",
@@ -386,7 +439,45 @@
 			"locationPlaceholder": "Location ID (e.g.: 1)",
 			"price": "Price",
 			"pricePlaceholder": "Price per night",
-			"image": "Image"
+			"image": "Image",
+			"infoTitle": "Room details",
+			"guests": "Guests",
+			"bedrooms": "Bedrooms",
+			"beds": "Beds",
+			"bathrooms": "Bathrooms",
+			"descriptionTitle": "Description",
+			"descriptionPlaceholder": "Enter detailed room description..."
+		},
+		"search": {
+			"name": "🔍 Search by name",
+			"price": "💰 Search by price",
+			"location": "📍 Search by location",
+			"placeholderName": "Enter room name...",
+			"placeholderPrice": "Enter price...",
+			"placeholderLocation": "Enter location name..."
+		},
+		"resultsCount": "{count} results",
+		"filter": {
+			"placeholder": "Filter by location",
+			"allLocations": "All locations"
+		},
+		"filteredSummary": "{filtered} / {total} rooms",
+		"perNight": "₫/night",
+		"amenities": {
+			"mayGiat": "🧺 Washing machine",
+			"banLa": "👔 Iron",
+			"tivi": "📺 TV",
+			"dieuHoa": "❄️ Air conditioning",
+			"wifi": "📶 Wifi",
+			"bep": "🍳 Kitchen",
+			"doXe": "🚗 Parking",
+			"hoBoi": "🏊 Pool",
+			"banUi": "👕 Ironing board"
+		},
+		"upload": {
+			"click": "Click to upload image",
+			"hint": "PNG, JPG, WEBP (max 5MB)",
+			"change": "Change image"
 		},
 		"messages": {
 			"createSuccess": "Room created successfully!",
@@ -467,7 +558,20 @@
 			"role": "Role",
 			"actions": "Actions"
 		},
-		"noData": "No data",
+		"noData": {
+			"title": "No data",
+			"subtitle": "No users found"
+		},
+		"search": {
+			"name": "🔍 Search by name",
+			"email": "📧 Search by email",
+			"role": "👤 Search by role",
+			"placeholderName": "Enter user name...",
+			"placeholderEmail": "Enter user email...",
+			"placeholderRole": "Enter role (USER, ADMIN)..."
+		},
+		"resultsCount": "{count} results",
+		"pagination": "Page {page} / {total} (Total {count} users)",
 		"modal": {
 			"createTitle": "Create User",
 			"editTitle": "Edit User",

@@ -156,7 +156,7 @@ export default function BookingManagementPage() {
       render: (id: number) => <span className="font-medium text-gray-900">{id}</span>
     },
     {
-      title: "Người đặt",
+      title: t("table.user"),
       dataIndex: "maNguoiDung",
       width: 180,
       render: (maNguoiDung: number) => {
@@ -168,7 +168,7 @@ export default function BookingManagementPage() {
             </div>
             <div className="flex flex-col">
               <span className="font-medium text-gray-900 text-sm">
-                {user?.name || 'Không rõ'}
+                {user?.name || t("unknown")}
               </span>
               <span className="text-xs text-gray-500 truncate max-w-[120px]">
                 {user?.email || `#${maNguoiDung}`}
@@ -214,7 +214,7 @@ export default function BookingManagementPage() {
       }
     },
     { 
-      title: "Thời gian", 
+      title: t("table.time"), 
       dataIndex: "ngayDen",
       width: 180,
       render: (_: string, record: Booking) => {
@@ -231,7 +231,7 @@ export default function BookingManagementPage() {
               <span className="font-medium text-gray-900">{checkOut.format('DD/MM')}</span>
             </div>
             <span className="text-xs text-gray-500">
-              {nights} đêm
+              {nights} {t("nights")}
             </span>
           </div>
         );
@@ -250,7 +250,7 @@ export default function BookingManagementPage() {
       )
     },
     {
-      title: "Giá tiền",
+      title: t("table.price"),
       dataIndex: "maPhong",
       width: 140,
       render: (_: number, record: Booking) => {
@@ -268,7 +268,7 @@ export default function BookingManagementPage() {
               {formatCurrency.toVND(totalPrice)}
             </span>
             <span className="text-xs text-gray-500">
-              {formatCurrency.toVND(room.giaTien)}/đêm
+              {formatCurrency.toVND(room.giaTien)}/{t("perNight")}
             </span>
           </div>
         );
@@ -308,7 +308,7 @@ export default function BookingManagementPage() {
               <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mb-1">
                 {t("title")}
               </h2>
-              <p className="text-sm text-gray-600">Quản lý tất cả đặt phòng</p>
+              <p className="text-sm text-gray-600">{t("subtitle")}</p>
             </div>
             <button 
               onClick={openCreate} 
@@ -328,8 +328,8 @@ export default function BookingManagementPage() {
                 className="w-full"
                 size="large"
                 options={[
-                  { value: "name", label: "🔍 Tìm theo tên" },
-                  { value: "email", label: "📧 Tìm theo email" },
+                  { value: "name", label: t("search.name") },
+                  { value: "email", label: t("search.email") },
                 ]}
               />
             </div>
@@ -348,8 +348,8 @@ export default function BookingManagementPage() {
                   onChange={(e) => setSearchKeyword(e.target.value)}
                   placeholder={
                     searchType === "name"
-                      ? "Nhập tên người đặt phòng..."
-                      : "Nhập email người đặt..."
+                      ? t("search.placeholderName")
+                      : t("search.placeholderEmail")
                   }
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 />
@@ -360,7 +360,7 @@ export default function BookingManagementPage() {
             {searchKeyword && (
               <div className="flex items-center justify-center sm:justify-start gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-lg whitespace-nowrap">
                 <CalendarOutlined />
-                <span className="font-medium text-sm sm:text-base">{filteredBookings.length} kết quả</span>
+                <span className="font-medium text-sm sm:text-base">{t("resultsCount", { count: filteredBookings.length })}</span>
               </div>
             )}
           </div>
@@ -371,7 +371,7 @@ export default function BookingManagementPage() {
           <Col xs={24} sm={12} lg={8}>
             <Card>
               <Statistic
-                title={searchKeyword ? "Booking tìm thấy" : "Tổng số booking"}
+                title={searchKeyword ? t("stats.found") : t("stats.total")}
                 value={filteredBookings.length}
                 prefix={<CalendarOutlined />}
                 valueStyle={{ color: searchKeyword ? '#1890ff' : '#3f8600' }}
@@ -382,7 +382,7 @@ export default function BookingManagementPage() {
           <Col xs={24} sm={12} lg={8}>
             <Card>
               <Statistic
-                title={searchKeyword ? "Doanh thu (đã lọc)" : "Tổng doanh thu"}
+                title={searchKeyword ? t("stats.revenueFiltered") : t("stats.totalRevenue")}
                 value={totalRevenue}
                 precision={0}
                 prefix={<DollarOutlined />}
@@ -394,7 +394,7 @@ export default function BookingManagementPage() {
           <Col xs={24} sm={24} lg={8}>
             <Card>
               <Statistic
-                title="Doanh thu trung bình/booking"
+                title={t("stats.avgPerBooking")}
                 value={filteredBookings.length > 0 ? totalRevenue / filteredBookings.length : 0}
                 precision={0}
                 prefix={<DollarOutlined />}
@@ -418,7 +418,7 @@ export default function BookingManagementPage() {
               className="admin-table-pagination"
               pagination={{ 
               pageSize: 10,
-              showTotal: (total) => `${total} booking(s)`,
+                showTotal: (total) => t("pagination.showTotal", { total }),
               showSizeChanger: true,
               pageSizeOptions: ['10', '20', '50'],
               locale: {
@@ -542,8 +542,8 @@ export default function BookingManagementPage() {
         onCancel={() => setIsModalOpen(false)}
         onOk={submit}
         width={800}
-        okText={modalMode === "create" ? "Tạo booking" : "Cập nhật"}
-        cancelText="Hủy"
+        okText={modalMode === "create" ? t("modal.okCreate") : t("modal.okEdit")}
+        cancelText={t("modal.cancel")}
         className="booking-modal"
         styles={{
           body: { maxHeight: '70vh', overflowY: 'auto' }
@@ -551,10 +551,10 @@ export default function BookingManagementPage() {
       >
         <Form layout="vertical" className="mt-4">
           {/* Chọn phòng */}
-          <Form.Item label="Phòng" required>
+          <Form.Item label={t("modal.fields.room")} required>
             <Select
               showSearch
-              placeholder="Chọn phòng"
+              placeholder={t("modal.fields.roomPlaceholder")}
               value={formData.maPhong || undefined}
               onChange={(value) => setFormData({ ...formData, maPhong: value })}
               optionFilterProp="children"
@@ -563,7 +563,7 @@ export default function BookingManagementPage() {
               }
               options={roomsList.map((room) => ({
                 value: room.id,
-                label: `${room.tenPhong} - ${formatCurrency.toVND(room.giaTien)}/đêm`,
+                label: `${room.tenPhong} - ${formatCurrency.toVND(room.giaTien)}${t("perNight")}`,
                 room: room,
               }))}
               optionRender={(option) => {
@@ -586,7 +586,7 @@ export default function BookingManagementPage() {
                     <div className="flex-1">
                       <div className="font-medium text-sm sm:text-base">{room.tenPhong}</div>
                       <div className="text-xs text-gray-500">
-                        {location ? `${location.tenViTri}, ${location.tinhThanh}` : `ID: ${room.id}`} · {formatCurrency.toVND(room.giaTien)}/đêm
+                        {location ? `${location.tenViTri}, ${location.tinhThanh}` : `ID: ${room.id}`} · {formatCurrency.toVND(room.giaTien)}{t("perNight")}
                       </div>
                     </div>
                   </div>
@@ -596,11 +596,11 @@ export default function BookingManagementPage() {
           </Form.Item>
 
           {/* Chọn ngày */}
-          <Form.Item label="Ngày nhận/trả phòng" required>
+          <Form.Item label={t("modal.fields.dateRange")} required>
             <RangePicker
               className="w-full"
               format="DD/MM/YYYY"
-              placeholder={['Ngày nhận phòng', 'Ngày trả phòng']}
+              placeholder={[t("modal.fields.datePlaceholderStart"), t("modal.fields.datePlaceholderEnd")]}
               value={
                 formData.ngayDen && formData.ngayDi
                   ? [dayjs(formData.ngayDen), dayjs(formData.ngayDi)]
@@ -626,12 +626,12 @@ export default function BookingManagementPage() {
           </Form.Item>
 
           {/* Số khách */}
-          <Form.Item label="Số lượng khách" required>
+          <Form.Item label={t("modal.fields.guests")} required>
             <InputNumber
               className="w-full"
               min={1}
               max={20}
-              placeholder="Nhập số khách"
+              placeholder={t("modal.fields.guestsPlaceholder")}
               prefix={<UserOutlined />}
               value={formData.soLuongKhach}
               onChange={(value) => setFormData({ ...formData, soLuongKhach: value || 1 })}
@@ -644,7 +644,7 @@ export default function BookingManagementPage() {
             <div className="bg-rose-50 p-3 sm:p-4 rounded-lg border border-rose-200">
               <h4 className="font-semibold mb-2 flex items-center gap-2 text-sm sm:text-base">
                 <DollarOutlined className="text-rose-600" />
-                Tóm tắt đặt phòng
+                {t("summary.title")}
               </h4>
               {(() => {
                 const room = roomsMap[formData.maPhong];
@@ -654,19 +654,19 @@ export default function BookingManagementPage() {
                 return (
                   <div className="space-y-1 text-xs sm:text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Phòng:</span>
+                      <span className="text-gray-600">{t("summary.room")}</span>
                       <span className="font-medium">{room.tenPhong}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Số đêm:</span>
-                      <span className="font-medium">{nights} đêm</span>
+                      <span className="text-gray-600">{t("summary.nights")}</span>
+                      <span className="font-medium">{nights} {t("nights")}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Giá/đêm:</span>
+                      <span className="text-gray-600">{t("summary.pricePerNight")}</span>
                       <span className="font-medium">{formatCurrency.toVND(room.giaTien)}</span>
                     </div>
                     <div className="flex justify-between pt-2 border-t border-rose-200">
-                      <span className="font-semibold">Tổng cộng:</span>
+                      <span className="font-semibold">{t("summary.total")}</span>
                       <span className="font-bold text-rose-600">{formatCurrency.toVND(total)}</span>
                     </div>
                   </div>

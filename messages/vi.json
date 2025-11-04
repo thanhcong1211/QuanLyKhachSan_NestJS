@@ -3,6 +3,16 @@
 		"en": "English",
 		"vi": "Tiếng Việt"
 	},
+	"dashboardManagement": {
+		"title": "Bảng điều khiển",
+		"subtitle": "Tổng quan hệ thống và số liệu chính",
+		"stats": {
+			"rooms": "Tổng phòng",
+			"users": "Tổng người dùng",
+			"bookings": "Tổng đặt phòng",
+			"revenue": "Tổng doanh thu"
+		}
+	},
 	"aria": {
 		"switchToVietnamese": "Chuyển ngôn ngữ sang Tiếng Việt",
 		"switchToEnglish": "Chuyển ngôn ngữ sang Tiếng Anh"
@@ -115,21 +125,64 @@
 	},
 	"bookingManagement": {
 		"title": "Quản lý đặt phòng",
+		"subtitle": "Quản lý tất cả đặt phòng",
+		"search": {
+			"name": "🔍 Tìm theo tên",
+			"email": "📧 Tìm theo email",
+			"placeholderName": "Nhập tên người đặt...",
+			"placeholderEmail": "Nhập email người đặt..."
+		},
+		"resultsCount": "{count} kết quả",
+		"stats": {
+			"found": "Booking tìm thấy",
+			"total": "Tổng số booking",
+			"revenueFiltered": "Doanh thu (đã lọc)",
+			"totalRevenue": "Tổng doanh thu",
+			"avgPerBooking": "Doanh thu trung bình/booking"
+		},
 		"table": {
 			"id": "ID",
+			"user": "Người đặt",
 			"room": "Phòng",
+			"time": "Thời gian",
 			"checkIn": "Ngày đến",
 			"checkOut": "Ngày đi",
 			"guests": "Số khách",
+			"price": "Giá",
 			"actions": "Hành động"
 		},
 		"modal": {
 			"createTitle": "Thêm đặt phòng",
 			"editTitle": "Cập nhật đặt phòng",
+			"okCreate": "Tạo booking",
+			"okEdit": "Cập nhật",
+			"cancel": "Hủy",
 			"roomPlaceholder": "Mã phòng",
 			"checkInPlaceholder": "Ngày đến (YYYY-MM-DD)",
 			"checkOutPlaceholder": "Ngày đi (YYYY-MM-DD)",
-			"guestsPlaceholder": "Số lượng khách"
+			"guestsPlaceholder": "Số lượng khách",
+			"fields": {
+				"room": "Phòng",
+				"roomPlaceholder": "Chọn phòng",
+				"dateRange": "Chọn ngày",
+				"datePlaceholderStart": "Ngày nhận phòng",
+				"datePlaceholderEnd": "Ngày trả phòng",
+				"guests": "Số khách",
+				"guestsPlaceholder": "Nhập số khách"
+			}
+		},
+		"pagination": {
+			"showTotal": "{total} booking(s)"
+		},
+		"unknown": "Không rõ",
+		"nights": "đêm",
+		"perNight": "/ đêm",
+		"summary": {
+			"title": "Tóm tắt đặt phòng",
+			"room": "Phòng:",
+			"nights": "Số đêm:",
+			"pricePerNight": "Giá/đêm:",
+			"total": "Tổng cộng:"
 		},
 		"messages": {
 			"createSuccess": "Tạo đặt phòng thành công!",
@@ -138,7 +191,7 @@
 			"updateError": "Cập nhật thất bại",
 			"deleteSuccess": "Xóa đặt phòng thành công!",
 			"deleteError": "Không thể xóa đặt phòng",
-			"confirmDelete": "Bạn có chắc muốn xóa đặt phòng #${id}?"
+			"confirmDelete": "Bạn có chắc muốn xóa đặt phòng #{id}?"
 		}
 	},
 	"bookingPage": {
@@ -384,7 +437,45 @@
 			"locationPlaceholder": "ID vị trí (ví dụ: 1)",
 			"price": "Giá tiền",
 			"pricePlaceholder": "Giá theo đêm",
-			"image": "Hình ảnh"
+			"image": "Hình ảnh",
+			"infoTitle": "Thông tin phòng",
+			"guests": "Khách",
+			"bedrooms": "Phòng ngủ",
+			"beds": "Giường",
+			"bathrooms": "Phòng tắm",
+			"descriptionTitle": "Mô tả",
+			"descriptionPlaceholder": "Nhập mô tả chi tiết về phòng..."
+		},
+		"search": {
+			"name": "🔍 Tìm theo tên",
+			"price": "💰 Tìm theo giá",
+			"location": "📍 Tìm theo vị trí",
+			"placeholderName": "Nhập tên phòng...",
+			"placeholderPrice": "Nhập giá phòng...",
+			"placeholderLocation": "Nhập tên vị trí..."
+		},
+		"resultsCount": "{count} kết quả",
+		"filter": {
+			"placeholder": "Lọc theo vị trí",
+			"allLocations": "Tất cả vị trí"
+		},
+		"filteredSummary": "{filtered} / {total} phòng",
+		"perNight": "/ đêm",
+		"amenities": {
+			"mayGiat": "🧺 Máy giặt",
+			"banLa": "👔 Bàn là",
+			"tivi": "📺 Tivi",
+			"dieuHoa": "❄️ Điều hòa",
+			"wifi": "📶 Wifi",
+			"bep": "🍳 Bếp",
+			"doXe": "🚗 Đỗ xe",
+			"hoBoi": "🏊 Hồ bơi",
+			"banUi": "👕 Bàn ủi"
+		},
+		"upload": {
+			"click": "Click để tải ảnh lên",
+			"hint": "PNG, JPG, WEBP (max 5MB)",
+			"change": "Đổi ảnh"
 		},
 		"messages": {
 			"createSuccess": "Tạo phòng mới thành công!",
@@ -465,7 +556,20 @@
 			"role": "Role",
 			"actions": "Thao tác"
 		},
-		"noData": "Không có dữ liệu",
+		"noData": {
+			"title": "Không có dữ liệu",
+			"subtitle": "Không tìm thấy người dùng"
+		},
+		"search": {
+			"name": "🔍 Tìm theo tên",
+			"email": "📧 Tìm theo email",
+			"role": "👤 Tìm theo quyền",
+			"placeholderName": "Nhập tên người dùng...",
+			"placeholderEmail": "Nhập email...",
+			"placeholderRole": "Nhập quyền (USER, ADMIN)..."
+		},
+		"resultsCount": "{count} kết quả",
+		"pagination": "Trang {page} / {total} (Tổng {count} người dùng)",
 		"modal": {
 			"createTitle": "Thêm người dùng",
 			"editTitle": "Chỉnh sửa người dùng",

@@ -138,9 +138,9 @@ export default function RoomManagement() {
                 onChange={(e) => setSearchType(e.target.value as "name" | "price" | "location")}
                 className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 bg-white font-medium"
               >
-                <option value="name">🏠 Tìm theo tên phòng</option>
-                <option value="price">💰 Tìm theo giá</option>
-                <option value="location">📍 Tìm theo vị trí</option>
+                <option value="name">{t("search.name")}</option>
+                <option value="price">{t("search.price")}</option>
+                <option value="location">{t("search.location")}</option>
               </select>
             </div>
 
@@ -160,10 +160,10 @@ export default function RoomManagement() {
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}
                 placeholder={
                   searchType === "name"
-                    ? "Nhập tên phòng..."
+                    ? t("search.placeholderName")
                     : searchType === "price"
-                    ? "Nhập giá phòng..."
-                    : "Nhập tên vị trí..."
+                    ? t("search.placeholderPrice")
+                    : t("search.placeholderLocation")
                 }
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
               />
@@ -181,7 +181,7 @@ export default function RoomManagement() {
             {searchKeyword && (
               <div className="flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-lg whitespace-nowrap">
                 <Home size={18} />
-                <span className="font-medium">{filteredRooms.length} kết quả</span>
+                <span className="font-medium">{t("resultsCount").replace("{count}", String(filteredRooms.length))}</span>
               </div>
             )}
           </div>
@@ -192,7 +192,7 @@ export default function RoomManagement() {
             <Select
               allowClear
               showSearch
-              placeholder="Lọc theo vị trí"
+              placeholder={t("filter.placeholder")}
               value={selectedLocation}
               onChange={(value) => setSelectedLocation(value || 0)}
               className="flex-1"
@@ -201,7 +201,7 @@ export default function RoomManagement() {
                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
               }
               options={[
-                { value: 0, label: 'Tất cả vị trí' },
+                { value: 0, label: t("filter.allLocations") },
                 ...locations.map((loc) => ({
                   value: loc.id,
                   label: `${loc.tenViTri}, ${loc.tinhThanh}`,
@@ -213,9 +213,7 @@ export default function RoomManagement() {
             {(selectedLocation !== 0 || searchKeyword) && (
               <div className="flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-lg whitespace-nowrap">
                 <Home size={18} />
-                <span className="font-medium">
-                  {filteredRooms.length} / {rooms.length} phòng
-                </span>
+                <span className="font-medium">{t("filteredSummary").replace("{filtered}", String(filteredRooms.length)).replace("{total}", String(rooms.length))}</span>
               </div>
             )}
           </div>
@@ -367,7 +365,7 @@ export default function RoomManagement() {
                   placeholder={t("form.pricePlaceholder")}
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">₫/đêm</span>
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">{t("perNight")}</span>
               </div>
             </div>
           </div>
@@ -380,7 +378,7 @@ export default function RoomManagement() {
             </label>
             <Select
               showSearch
-              placeholder="Chọn vị trí"
+              placeholder={t("form.locationPlaceholder")}
               value={formData.maViTri || undefined}
               onChange={(value) => setFormData({ ...formData, maViTri: value })}
               className="w-full"
@@ -399,13 +397,13 @@ export default function RoomManagement() {
           <div className="mb-4">
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Home size={16} className="text-blue-500" />
-              Thông tin phòng
+              {t("form.infoTitle")}
             </label>
             <div className="grid grid-cols-4 gap-3">
               <div>
                 <label className="flex items-center gap-1 text-xs text-gray-600 mb-1">
                   <Users size={14} />
-                  Khách
+                  {t("form.guests")}
                 </label>
                 <input
                   type="number"
@@ -419,7 +417,7 @@ export default function RoomManagement() {
               <div>
                 <label className="flex items-center gap-1 text-xs text-gray-600 mb-1">
                   <Bed size={14} />
-                  Phòng ngủ
+                  {t("form.bedrooms")}
                 </label>
                 <input
                   type="number"
@@ -433,7 +431,7 @@ export default function RoomManagement() {
               <div>
                 <label className="flex items-center gap-1 text-xs text-gray-600 mb-1">
                   <Bed size={14} />
-                  Giường
+                  {t("form.beds")}
                 </label>
                 <input
                   type="number"
@@ -447,7 +445,7 @@ export default function RoomManagement() {
               <div>
                 <label className="flex items-center gap-1 text-xs text-gray-600 mb-1">
                   <Bath size={14} />
-                  Phòng tắm
+                  {t("form.bathrooms")}
                 </label>
                 <input
                   type="number"
@@ -464,12 +462,12 @@ export default function RoomManagement() {
           {/* Mô tả */}
           <div className="mb-4">
             <label className="text-sm font-medium text-gray-700 mb-2 block">
-              Mô tả phòng
+              {t("form.descriptionTitle")}
             </label>
             <textarea
               value={formData.moTa}
               onChange={(e) => setFormData({ ...formData, moTa: e.target.value })}
-              placeholder="Nhập mô tả chi tiết về phòng..."
+              placeholder={t("form.descriptionPlaceholder")}
               rows={3}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
             />
@@ -482,31 +480,31 @@ export default function RoomManagement() {
             </label>
             <div className="grid grid-cols-4 gap-3">
               {[
-                { key: 'mayGiat', label: '🧺 Máy giặt' },
-                { key: 'banLa', label: '👔 Bàn là' },
-                { key: 'tivi', label: '📺 Tivi' },
-                { key: 'dieuHoa', label: '❄️ Điều hòa' },
-                { key: 'wifi', label: '📶 Wifi' },
-                { key: 'bep', label: '🍳 Bếp' },
-                { key: 'doXe', label: '🚗 Đỗ xe' },
-                { key: 'hoBoi', label: '🏊 Hồ bơi' },
-                { key: 'banUi', label: '👕 Bàn ủi' },
-              ].map((amenity) => (
+                'mayGiat',
+                'banLa',
+                'tivi',
+                'dieuHoa',
+                'wifi',
+                'bep',
+                'doXe',
+                'hoBoi',
+                'banUi',
+              ].map((key) => (
                 <label
-                  key={amenity.key}
+                  key={key}
                   className={`flex items-center gap-2 px-3 py-2 border rounded-lg cursor-pointer transition-all ${
-                    formData[amenity.key as keyof typeof formData]
+                    formData[key as keyof typeof formData]
                       ? 'border-rose-500 bg-rose-50'
                       : 'border-gray-300 hover:border-rose-300'
                   }`}
                 >
                   <input
                     type="checkbox"
-                    checked={!!formData[amenity.key as keyof typeof formData]}
-                    onChange={(e) => setFormData({ ...formData, [amenity.key]: e.target.checked })}
+                    checked={!!formData[key as keyof typeof formData]}
+                    onChange={(e) => setFormData({ ...formData, [key]: e.target.checked })}
                     className="rounded text-rose-500 focus:ring-rose-500"
                   />
-                  <span className="text-sm">{amenity.label}</span>
+                  <span className="text-sm">{t(`amenities.${key}`)}</span>
                 </label>
               ))}
             </div>
@@ -536,14 +534,14 @@ export default function RoomManagement() {
                     <img src={imagePreview} alt="Preview" className="w-full h-48 object-cover rounded-lg" />
                     <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity rounded-lg">
                       <UploadIcon size={32} className="text-white" />
-                      <span className="text-white ml-2">Đổi ảnh</span>
+                      <span className="text-white ml-2">{t("upload.change")}</span>
                     </div>
                   </div>
                 ) : (
                   <div className="text-center py-8">
                     <UploadIcon size={48} className="mx-auto text-gray-400 mb-2" />
-                    <p className="text-sm text-gray-600">Click để tải ảnh lên</p>
-                    <p className="text-xs text-gray-400 mt-1">PNG, JPG, WEBP (max 5MB)</p>
+                    <p className="text-sm text-gray-600">{t("upload.click")}</p>
+                    <p className="text-xs text-gray-400 mt-1">{t("upload.hint")}</p>
                   </div>
                 )}
               </label>

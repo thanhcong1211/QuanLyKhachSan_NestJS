@@ -4,6 +4,7 @@ import '@ant-design/v5-patch-for-react-19';
 import DashboardChart from "@/components/Dashboard/DashboardChart";
 import { useDashboardStats } from "@/hooks/Dashboard/useDashboardStats";
 import { Card, Row, Col, Statistic, Spin } from "antd";
+import { useTranslations } from "@/lib/i18n";
 import { 
   HomeOutlined, 
   UserOutlined, 
@@ -13,6 +14,7 @@ import {
 import { formatCurrency } from "@/helpers/formatCurrency";
 
 export default function DashboardPage() {
+  const t = useTranslations("dashboardManagement");
   const { stats, isLoading } = useDashboardStats();
 
   if (isLoading) {
@@ -28,9 +30,9 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
         <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">
-          Dashboard
+          {t("title")}
         </h1>
-        <p className="text-sm text-gray-600 mt-1">Tổng quan hệ thống quản lý</p>
+        <p className="text-sm text-gray-600 mt-1">{t("subtitle")}</p>
       </div>
       
       {/* Thống kê tổng quan - Responsive Grid */}
@@ -38,7 +40,7 @@ export default function DashboardPage() {
         <Col xs={24} sm={12} lg={6}>
           <Card bordered={false} className="shadow-sm hover:shadow-md transition-shadow">
             <Statistic
-              title={<span className="text-gray-600 font-medium text-sm">Tổng phòng</span>}
+              title={<span className="text-gray-600 font-medium text-sm">{t("stats.rooms")}</span>}
               value={stats.totalRooms}
               prefix={<HomeOutlined className="text-blue-500" />}
               valueStyle={{ color: '#1890ff', fontWeight: 'bold', fontSize: '24px' }}
@@ -49,7 +51,7 @@ export default function DashboardPage() {
         <Col xs={24} sm={12} lg={6}>
           <Card bordered={false} className="shadow-sm hover:shadow-md transition-shadow">
             <Statistic
-              title={<span className="text-gray-600 font-medium text-sm">Tổng người dùng</span>}
+              title={<span className="text-gray-600 font-medium text-sm">{t("stats.users")}</span>}
               value={stats.totalUsers}
               prefix={<UserOutlined className="text-green-500" />}
               valueStyle={{ color: '#52c41a', fontWeight: 'bold', fontSize: '24px' }}
@@ -60,7 +62,7 @@ export default function DashboardPage() {
         <Col xs={24} sm={12} lg={6}>
           <Card bordered={false} className="shadow-sm hover:shadow-md transition-shadow">
             <Statistic
-              title={<span className="text-gray-600 font-medium text-sm">Tổng đặt phòng</span>}
+              title={<span className="text-gray-600 font-medium text-sm">{t("stats.bookings")}</span>}
               value={stats.totalBookings}
               prefix={<CalendarOutlined className="text-rose-500" />}
               valueStyle={{ color: '#ec4899', fontWeight: 'bold', fontSize: '24px' }}
@@ -71,7 +73,7 @@ export default function DashboardPage() {
         <Col xs={24} sm={12} lg={6}>
           <Card bordered={false} className="shadow-sm hover:shadow-md transition-shadow">
             <Statistic
-              title={<span className="text-gray-600 font-medium text-sm">Tổng doanh thu</span>}
+              title={<span className="text-gray-600 font-medium text-sm">{t("stats.revenue")}</span>}
               value={stats.totalRevenue}
               prefix={<DollarOutlined className="text-green-600" />}
               valueStyle={{ color: '#059669', fontWeight: 'bold', fontSize: '20px' }}

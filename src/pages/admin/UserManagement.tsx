@@ -84,15 +84,9 @@ export default function UserManagement() {
                 onChange={(e) => setSearchType(e.target.value as "name" | "email" | "role")}
                 className="w-full h-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white font-medium"
               >
-                <option value="name">
-                  🔍 Tìm theo tên
-                </option>
-                <option value="email">
-                  📧 Tìm theo email
-                </option>
-                <option value="role">
-                  👤 Tìm theo quyền
-                </option>
+                <option value="name">{t("search.name")}</option>
+                <option value="email">{t("search.email")}</option>
+                <option value="role">{t("search.role")}</option>
               </select>
             </div>
 
@@ -112,10 +106,10 @@ export default function UserManagement() {
                 onKeyPress={(e) => e.key === "Enter" && handleSearch()}
                 placeholder={
                   searchType === "name" 
-                    ? "Nhập tên người dùng..." 
+                    ? t("search.placeholderName")
                     : searchType === "email"
-                    ? "Nhập email để tìm kiếm..."
-                    : "Nhập quyền (USER, ADMIN)..."
+                    ? t("search.placeholderEmail")
+                    : t("search.placeholderRole")
                 }
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
@@ -133,7 +127,7 @@ export default function UserManagement() {
             {searchKeyword && (
               <div className="flex items-center gap-2 bg-rose-50 text-rose-700 px-4 py-2 rounded-lg whitespace-nowrap">
                 <UserCircle size={18} />
-                <span className="font-medium">{filteredUsers.length} kết quả</span>
+                <span className="font-medium">{t("resultsCount", { count: filteredUsers.length })}</span>
               </div>
             )}
           </div>
