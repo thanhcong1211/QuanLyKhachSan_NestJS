@@ -5,6 +5,7 @@ import useLocationManager from "@/hooks/Location/useLocationManager";
 import { useTranslations } from "@/lib/i18n";
 import type { Location } from "@/types/location.type";
 import { Modal, Spin } from "antd";
+import AdminPagination from "@/components/ui/admin-pagination";
 import { 
   Plus, 
   Search, 
@@ -42,17 +43,16 @@ export default function LocationManagement() {
   } = useLocationManager();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
+    <div className="space-y-4 sm:space-y-6">
+      {/* Header - Responsive */}
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2 flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mb-2 flex items-center gap-3">
                 <MapPin size={28} className="text-rose-500" />
                 <span>{t("title")}</span>
               </h1>
-              <p className="text-gray-600">{t("totalCount").replace("{count}", String(totalRows))}</p>
+              <p className="text-sm text-gray-600">{t("totalCount").replace("{count}", String(totalRows))}</p>
             </div>
             <button
               onClick={openCreate}
@@ -174,110 +174,169 @@ export default function LocationManagement() {
                 </table>
               </div>
 
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200">
-                    <div className="text-sm text-gray-600">
-                    {t("pagination").replace("{page}", String(pageIndex)).replace("{total}", String(totalPages)).replace("{count}", String(totalRows))}
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setPageIndex((prev: number) => Math.max(1, prev - 1))}
-                      disabled={pageIndex === 1}
-                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      {tc("actions.previous") || "Prev"}
-                    </button>
-                    <button
-                      onClick={() => setPageIndex((prev: number) => Math.min(totalPages, prev + 1))}
-                      disabled={pageIndex === totalPages}
-                      className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                      {tc("actions.next") || "Next"}
-                    </button>
-                  </div>
-                </div>
-              )}
+              {/* Pagination Component */}
+              <AdminPagination
+                currentPage={pageIndex}
+                totalPages={totalPages}
+                totalItems={totalRows}
+                onPageChange={setPageIndex}
+                previousLabel={tc("actions.previous") || "Trước"}
+                nextLabel={tc("actions.next") || "Tiếp"}
+                infoLabel={t("pagination")}
+              />
             </>
           )}
         </div>
-      </div>
 
-      {/* Modal Create/Edit */}
+      {/* Modal Create/Edit - Enhanced */}
       <Modal
-        title={modalMode === "create" ? t("modal.createTitle") : t("modal.editTitle")}
+        title={
+          <div className="flex items-center gap-3 pb-4 border-b">
+            <div className="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center">
+              <MapPin size={20} className="text-rose-600" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-gray-900">
+                {modalMode === "create" ? t("modal.createTitle") : t("modal.editTitle")}
+              </h3>
+              <p className="text-sm text-gray-500">
+                {modalMode === "create" 
+                  ? "Thêm vị trí mới vào hệ thống" 
+                  : "Cập nhật thông tin vị trí"}
+              </p>
+            </div>
+          </div>
+        }
         open={isModalOpen}
         onOk={submit}
         onCancel={() => setIsModalOpen(false)}
         okText={modalMode === "create" ? t("modal.createButton") : t("modal.updateButton")}
         cancelText={tc("actions.cancel")}
-        width={600}
+        width={700}
         confirmLoading={loading}
+        okButtonProps={{
+          className: "bg-rose-500 hover:bg-rose-600",
+        }}
       >
-        <div className="space-y-4 py-4">
+        <div className="space-y-5 py-6">
           {/* Tên vị trí */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t("form.name")} <span className="text-red-500">*</span>
+            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+              <MapPin size={16} className="text-rose-500" />
+              {t("form.name")} 
+              <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               value={formData.tenViTri}
               onChange={(e) => setFormData({ ...formData, tenViTri: e.target.value })}
-              placeholder={t("form.namePlaceholder")}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
+              placeholder="VD: Hồ Hoàn Kiếm, Bãi biển Mỹ Khê..."
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent transition-all"
             />
+            <p className="mt-1 text-xs text-gray-500">Tên địa điểm cụ thể</p>
           </div>
 
-          {/* Tỉnh thành */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t("form.province")} <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              value={formData.tinhThanh}
-              onChange={(e) => setFormData({ ...formData, tinhThanh: e.target.value })}
-              placeholder={t("form.provincePlaceholder")}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
-            />
-          </div>
+          {/* Row: Tỉnh thành & Quốc gia */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Tỉnh thành */}
+            <div>
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                <MapPin size={16} className="text-blue-500" />
+                {t("form.province")} 
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.tinhThanh}
+                onChange={(e) => setFormData({ ...formData, tinhThanh: e.target.value })}
+                placeholder="VD: Hà Nội, TP.HCM..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              />
+            </div>
 
-          {/* Quốc gia */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t("form.country")} <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              value={formData.quocGia}
-              onChange={(e) => setFormData({ ...formData, quocGia: e.target.value })}
-              placeholder={t("form.countryPlaceholder")}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
-            />
+            {/* Quốc gia */}
+            <div>
+              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+                <Globe size={16} className="text-green-500" />
+                {t("form.country")} 
+                <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.quocGia}
+                onChange={(e) => setFormData({ ...formData, quocGia: e.target.value })}
+                placeholder="VD: Việt Nam, Thailand..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+              />
+            </div>
           </div>
 
           {/* Hình ảnh */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
+              <ImageIcon size={16} className="text-purple-500" />
               {t("form.image")}
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
-            />
-            {imagePreview && (
-              <div className="mt-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-full h-48 object-cover rounded-lg"
-                />
+            
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-rose-400 transition-colors">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                id="location-image-upload"
+                className="hidden"
+              />
+              
+              {imagePreview ? (
+                <div className="relative group">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-64 object-cover rounded-lg"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                    <label
+                      htmlFor="location-image-upload"
+                      className="bg-white text-gray-900 px-6 py-3 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors font-medium"
+                    >
+                      Đổi ảnh khác
+                    </label>
+                  </div>
+                </div>
+              ) : (
+                <label
+                  htmlFor="location-image-upload"
+                  className="flex flex-col items-center justify-center cursor-pointer"
+                >
+                  <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                    <ImageIcon size={32} className="text-gray-400" />
+                  </div>
+                  <p className="text-sm font-medium text-gray-700 mb-1">
+                    Click để chọn ảnh vị trí
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, GIF tối đa 10MB
+                  </p>
+                </label>
+              )}
+            </div>
+          </div>
+
+          {/* Preview thông tin */}
+          <div className="bg-gradient-to-r from-rose-50 to-blue-50 p-4 rounded-lg border border-rose-200">
+            <p className="text-xs font-semibold text-gray-600 mb-2">PREVIEW</p>
+            <div className="flex items-center gap-3">
+              <MapPin size={20} className="text-rose-600" />
+              <div>
+                <p className="font-bold text-gray-900">
+                  {formData.tenViTri || "Tên vị trí"}
+                </p>
+                <p className="text-sm text-gray-600">
+                  {formData.tinhThanh || "Tỉnh/TP"}, {formData.quocGia || "Quốc gia"}
+                </p>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </Modal>

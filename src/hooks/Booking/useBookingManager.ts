@@ -43,7 +43,12 @@ export const useBookingManager = () => {
         if (Array.isArray(maybeContent)) payload = maybeContent;
         else if (Array.isArray(maybeData)) payload = maybeData;
       }
-      if (Array.isArray(payload)) return payload as Booking[];
+      if (Array.isArray(payload)) {
+        const result = payload as Booking[];
+        console.log('[useBookingManager] Fetched bookings:', result.length, 'items');
+        console.log('[useBookingManager] Booking IDs:', result.map(b => b.id));
+        return result;
+      }
       return [];
     },
   });
@@ -81,8 +86,20 @@ export const useBookingManager = () => {
       message.success(t("messages.deleteSuccess"));
       await queryClient.invalidateQueries({ queryKey: ["bookings"] });
     },
-    onError: () => {
-      message.error(t("messages.deleteError"));
+    onError: (error: unknown) => {
+      console.error('[useBookingManager] Delete error:', error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const err = error as any;
+      const status = err?.response?.status;
+      const errorMsg = err?.response?.data?.message || err?.message || 'Unknown error';
+      
+      if (status === 404) {
+        message.error('Không tìm thấy booking để xóa');
+      } else if (status === 403) {
+        message.error('Không có quyền xóa booking này');
+      } else {
+        message.error(`Lỗi xóa booking: ${errorMsg}`);
+      }
     },
   });
 
@@ -106,6 +123,8 @@ export const useBookingManager = () => {
     setIsModalOpen(true);
   };
   const handleDelete = (record: Booking) => {
+    console.log('[useBookingManager] Attempting to delete booking:', record);
+    console.log('[useBookingManager] Booking ID:', record.id);
     Modal.confirm({
       title: tc("actions.confirm"),
       content: t("messages.confirmDelete").replace("#{id}", String(record.id)).replace("${id}", String(record.id)),
@@ -114,6 +133,7 @@ export const useBookingManager = () => {
       okButtonProps: { danger: true },
       onOk: async () => {
         try {
+          console.log('[useBookingManager] Calling deleteBooking.mutateAsync with ID:', record.id);
           await deleteBooking.mutateAsync(record.id);
         } catch (err) {
           console.error("[useBookingManager] delete error:", err);

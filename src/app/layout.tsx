@@ -2,12 +2,12 @@
 import '@ant-design/v5-patch-for-react-19';
 import "@/styles/globals.css";
 import { Manrope } from "next/font/google";
-import MainLayout from "@/layouts/MainLayout";
 import Providers from "@/app/Providers";
 import { cookies } from "next/headers";
 import { defaultLocale } from "@/i18n/config";
 import enMessages from "../../messages/en.json";
 import viMessages from "../../messages/vi.json";
+import MainLayout from '@/layouts/MainLayout';
 
 // Load the Manrope font at module scope (required by Next.js font loader)
 const manrope = Manrope({
@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} className={manrope.className}>
       <body>
         <Providers initialLocale={locale} initialMessages={messages}>
-          <MainLayout>{children}</MainLayout>
+          <MainLayout >{children}</MainLayout> 
         </Providers>
       </body>
     </html>

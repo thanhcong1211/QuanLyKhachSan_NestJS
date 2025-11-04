@@ -117,27 +117,7 @@ export default function UserMenu({ user, menuOpen, onToggleMenu, onLogout }: Use
                 < LayoutDashboard size={16} />
                 <span>{t("admin.dashboard")}</span>
               </button>
-              <button
-                onClick={() => handleNavigate("/admin/rooms")}
-                className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-              >
-                <Home size={16} />
-                <span>{t("admin.manageRooms")}</span>
-              </button>
-              <button
-                onClick={() => handleNavigate("/admin/locations")}
-                className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-              >
-                <MapPin size={16} />
-                <span>{t("admin.manageLocations")}</span>
-              </button>
-              <button
-                onClick={() => handleNavigate("/admin/users")}
-                className="flex items-center gap-3 w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-              >
-                <UsersIcon size={16} />
-                <span>{t("admin.manageUsers")}</span>
-              </button>
+             
               <hr className="my-1" />
               <button
                 onClick={onLogout}

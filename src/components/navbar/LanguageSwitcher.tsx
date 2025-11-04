@@ -28,9 +28,21 @@ export default function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => changeLanguage("vi")} className="text-white">🇻🇳 Tiếng Việt</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => changeLanguage("en")} className="text-white">🇬🇧 English</DropdownMenuItem>
+      <DropdownMenuContent align="end" className="w-48 bg-rose-50/80 backdrop-blur-sm border border-rose-200 shadow-lg">
+        <DropdownMenuItem 
+          onClick={() => changeLanguage("vi")} 
+          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-rose-100/80 focus:bg-rose-100/80 text-gray-900 font-medium rounded-md"
+        >
+          <span className="text-xl">🇻🇳</span>
+          <span>Tiếng Việt</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => changeLanguage("en")} 
+          className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-rose-100/80 focus:bg-rose-100/80 text-gray-900 font-medium rounded-md"
+        >
+          <span className="text-xl">🇬🇧</span>
+          <span>English</span>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

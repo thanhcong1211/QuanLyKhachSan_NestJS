@@ -162,8 +162,12 @@ export default function useRoomManager(initialPageSize = 10) {
           message.success(t("messages.deleteSuccess"));
           fetchRooms();
         } catch (error) {
-          console.error("delete room error:", error);
-          message.error(t("errors.delete"));
+          const err = error as { response?: { status?: number; data?: { content?: string } } };
+          if (err?.response?.status === 403) {
+            message.error("Không có quyền xóa phòng này");
+          } else {
+            message.error(t("errors.delete"));
+          }
         } finally {
           setLoading(false);
         }
@@ -173,6 +177,7 @@ export default function useRoomManager(initialPageSize = 10) {
 
   const submit = async () => {
     const userToken = storage.getToken();
+    
     if (!userToken) {
       Modal.confirm({
         title: tc("actions.confirm"),
@@ -204,7 +209,14 @@ export default function useRoomManager(initialPageSize = 10) {
           message.error("Không tìm thấy phòng cần sửa!");
           return;
         }
-        await roomService.update(selectedRoom.id, formData);
+        
+        const updatePayload = {
+          id: selectedRoom.id,
+          ...formData
+        };
+        
+        await roomService.update(selectedRoom.id, updatePayload);
+        
         if (imageFile && selectedRoom.id) {
           await roomService.uploadImage(selectedRoom.id, imageFile);
         }
@@ -213,8 +225,12 @@ export default function useRoomManager(initialPageSize = 10) {
       setIsModalOpen(false);
       fetchRooms();
     } catch (err) {
-      console.error("submit room error:", err);
-      message.error(modalMode === "create" ? t("errors.create") : t("errors.update"));
+      const error = err as { response?: { status?: number; data?: { content?: string } } };
+      if (error?.response?.status === 403) {
+        message.error("Không có quyền thực hiện thao tác này");
+      } else {
+        message.error(modalMode === "create" ? t("errors.create") : t("errors.update"));
+      }
     } finally {
       setLoading(false);
     }

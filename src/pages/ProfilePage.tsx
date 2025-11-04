@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useAppSelector } from "@/redux/hooks";
 import { Button } from "@/components/ui/button";
-import Input from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import { User, Mail, Phone, Calendar } from "lucide-react";
 
 export default function ProfilePage() {
@@ -74,14 +74,17 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Họ và tên
               </label>
-              <Input
-                leftIcon={<User size={18} />}
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                disabled={!isEditing}
-              />
+              <div className="relative">
+                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Input
+                  className="pl-10"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  disabled={!isEditing}
+                />
+              </div>
             </div>
 
             {/* Email */}
@@ -89,15 +92,18 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email
               </label>
-              <Input
-                type="email"
-                leftIcon={<Mail size={18} />}
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                disabled={!isEditing}
-              />
+              <div className="relative">
+                <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Input
+                  type="email"
+                  className="pl-10"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  disabled={!isEditing}
+                />
+              </div>
             </div>
 
             {/* Phone */}
@@ -105,14 +111,17 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Số điện thoại
               </label>
-              <Input
-                leftIcon={<Phone size={18} />}
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-                disabled={!isEditing}
-              />
+              <div className="relative">
+                <Phone size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Input
+                  className="pl-10"
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  disabled={!isEditing}
+                />
+              </div>
             </div>
 
             {/* Birthday */}
@@ -120,15 +129,18 @@ export default function ProfilePage() {
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Ngày sinh
               </label>
-              <Input
-                type="date"
-                leftIcon={<Calendar size={18} />}
-                value={formData.birthday}
-                onChange={(e) =>
-                  setFormData({ ...formData, birthday: e.target.value })
-                }
-                disabled={!isEditing}
-              />
+              <div className="relative">
+                <Calendar size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Input
+                  type="date"
+                  className="pl-10"
+                  value={formData.birthday}
+                  onChange={(e) =>
+                    setFormData({ ...formData, birthday: e.target.value })
+                  }
+                  disabled={!isEditing}
+                />
+              </div>
             </div>
 
             {/* Gender */}

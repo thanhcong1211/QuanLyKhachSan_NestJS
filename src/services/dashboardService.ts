@@ -1,4 +1,7 @@
 import { dashboardApi } from "@/api/dashboard.api";
+import type { Booking } from "@/types/booking.type";
+import type { Room } from "@/types/room.type";
+import dayjs from "dayjs";
 
 export const dashboardService = {
   getStats: async () => {
@@ -19,23 +22,27 @@ export const dashboardService = {
         return [];
       };
 
-      const rooms = unwrapArray(roomsRes);
+      const rooms = unwrapArray(roomsRes) as Room[];
       const users = unwrapArray(usersRes);
-      const bookings = unwrapArray(bookingsRes);
+      const bookings = unwrapArray(bookingsRes) as Booking[];
 
-      // ✅ Tính tổng doanh thu (nếu có dữ liệu đặt phòng)
-      const safeNumber = (v: unknown): number => {
-        if (typeof v === "number" && Number.isFinite(v)) return v;
-        if (typeof v === "string" && /^-?\d+(\.\d+)?$/.test(v)) return Number(v);
-        return 0;
-      };
+      // Tạo map phòng để lấy giá
+      const roomsMap: Record<number, Room> = {};
+      rooms.forEach((room) => {
+        roomsMap[room.id] = room;
+      });
 
-      const totalRevenue = (bookings || []).reduce((acc: number, booking: unknown) => {
-        if (typeof booking !== "object" || booking === null) return acc;
-        const b = booking as Record<string, unknown>;
-        const soNgay = safeNumber(b["soNgay"]);
-        const giaTien = safeNumber(b["giaTien"]);
-        return acc + soNgay * giaTien;
+      // ✅ Tính tổng doanh thu từ booking data thực
+      const totalRevenue = bookings.reduce((acc: number, booking: Booking) => {
+        const room = roomsMap[booking.maPhong];
+        if (!room) return acc;
+
+        const checkIn = dayjs(booking.ngayDen);
+        const checkOut = dayjs(booking.ngayDi);
+        const nights = checkOut.diff(checkIn, 'day');
+        const revenue = room.giaTien * nights;
+
+        return acc + revenue;
       }, 0);
 
       return {

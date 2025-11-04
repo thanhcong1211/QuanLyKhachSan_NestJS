@@ -2,7 +2,8 @@
 import '@ant-design/v5-patch-for-react-19';
 import { useAppSelector } from "@/redux/hooks";
 import { useEffect, useState } from "react";
-import { Table, Button, Popconfirm, message, Modal, Form, DatePicker, InputNumber, Select } from "antd";
+import { Table, Popconfirm, message, Modal, Form, DatePicker, InputNumber, Select } from "antd";
+import { Button } from "@/components/ui/button";
 import { CalendarOutlined, UserOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslations } from "@/lib/i18n";
 import { useBookingManager } from "@/hooks/Booking/useBookingManager";
@@ -10,6 +11,9 @@ import { roomService } from "@/services/roomService";
 import { bookingService } from "@/services/bookingService";
 import type { Room } from "@/types/room.type";
 import dayjs from "dayjs";
+import 'dayjs/locale/vi';
+
+dayjs.locale('vi'); // Set locale to Vietnamese
 
 const { RangePicker } = DatePicker;
 
@@ -197,22 +201,32 @@ export default function UserBookingsPage() {
     { 
       title: t('checkIn'), 
       dataIndex: 'ngayDen', 
-      width: 130,
+      width: 150,
       render: (ngayDen: string) => (
-        <div className="flex items-center gap-2">
-          <CalendarOutlined className="text-primary" />
-          <span>{new Date(ngayDen).toLocaleDateString('vi-VN')}</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <CalendarOutlined className="text-primary" />
+            <span className="font-medium">{dayjs(ngayDen).format('DD/MM/YYYY')}</span>
+          </div>
+          <span className="text-xs text-muted-foreground ml-6">
+            {dayjs(ngayDen).format('dddd')}
+          </span>
         </div>
       )
     },
     { 
       title: t('checkOut'), 
       dataIndex: 'ngayDi', 
-      width: 130,
+      width: 150,
       render: (ngayDi: string) => (
-        <div className="flex items-center gap-2">
-          <CalendarOutlined className="text-primary" />
-          <span>{new Date(ngayDi).toLocaleDateString('vi-VN')}</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <CalendarOutlined className="text-primary" />
+            <span className="font-medium">{dayjs(ngayDi).format('DD/MM/YYYY')}</span>
+          </div>
+          <span className="text-xs text-muted-foreground ml-6">
+            {dayjs(ngayDi).format('dddd')}
+          </span>
         </div>
       )
     },
@@ -271,7 +285,7 @@ export default function UserBookingsPage() {
           okText={t('delete')}
           cancelText={t('cancel')}
         >
-          <Button danger size="small">{t('delete')}</Button>
+          <Button variant="destructive" size="sm">{t('delete')}</Button>
         </Popconfirm>
       ),
     },
@@ -309,12 +323,11 @@ export default function UserBookingsPage() {
           </div>
           {user && (
             <Button 
-              type="primary" 
-              size="large" 
-              icon={<PlusOutlined />}
+              size="lg"
               onClick={handleCreateBooking}
-              className="shadow-md"
+              className="shadow-lg"
             >
+              <PlusOutlined />
               {t('createButton')}
             </Button>
           )}
@@ -350,13 +363,110 @@ export default function UserBookingsPage() {
                 rowKey="id"
                 bordered
                 scroll={{ x: 1200 }}
+                className="user-booking-table-pagination"
                 pagination={{ 
                   pageSize: 6,
                   showTotal: (total) => t('showTotal', { total }),
-                  showSizeChanger: false,
+                  showSizeChanger: true,
+                  pageSizeOptions: ['6', '12', '24'],
+                  locale: {
+                    items_per_page: '/ trang',
+                    jump_to: 'Đến',
+                    page: '',
+                    prev_page: 'Trang trước',
+                    next_page: 'Trang sau',
+                  },
                 }}
                 locale={{ emptyText: t('noBookings') }}
               />
+
+              <style jsx global>{`
+                .user-booking-table-pagination .ant-pagination {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 8px;
+                  padding: 24px 16px;
+                  background-color: #fafafa;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-total-text {
+                  color: rgb(75, 85, 99);
+                  font-size: 0.875rem;
+                  margin-right: auto;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item {
+                  background-color: white;
+                  border: 1px solid rgb(229, 231, 235);
+                  min-width: 40px;
+                  height: 40px;
+                  line-height: 38px;
+                  border-radius: 8px;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item a {
+                  color: rgb(55, 65, 81);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item:hover {
+                  background-color: rgb(249, 250, 251);
+                  border-color: rgb(236, 72, 153);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item:hover a {
+                  color: rgb(236, 72, 153);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item-active {
+                  background: linear-gradient(to right, #ec4899, #f472b6);
+                  border-color: transparent;
+                  box-shadow: 0 4px 6px -1px rgba(236, 72, 153, 0.3);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-item-active a {
+                  color: white;
+                  font-weight: 600;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-prev,
+                .user-booking-table-pagination .ant-pagination-next {
+                  background-color: white;
+                  border: 1px solid rgb(229, 231, 235);
+                  min-width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-prev button,
+                .user-booking-table-pagination .ant-pagination-next button {
+                  color: rgb(55, 65, 81);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-prev:hover,
+                .user-booking-table-pagination .ant-pagination-next:hover {
+                  background-color: rgb(249, 250, 251);
+                  border-color: rgb(236, 72, 153);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-prev:hover button,
+                .user-booking-table-pagination .ant-pagination-next:hover button {
+                  color: rgb(236, 72, 153);
+                }
+                
+                .user-booking-table-pagination .ant-pagination-disabled {
+                  opacity: 0.4;
+                }
+                
+                .user-booking-table-pagination .ant-pagination-disabled:hover {
+                  background-color: white;
+                  border-color: rgb(229, 231, 235);
+                }
+                
+                .user-booking-table-pagination .ant-select-selector {
+                  border-radius: 8px;
+                }
+              `}</style>
             </div>
           </>
         )}

@@ -30,10 +30,15 @@ export const roomApi = {
     
     return axiosClient.get(`${endpoints.room.search}?${searchParams.toString()}`);
   },
-  create: (data: CreateRoomRequest) => axiosClient.post(endpoints.room.create, data),
-  update: (id: number, data: UpdateRoomRequest) =>
+  create: (data: CreateRoomRequest) => 
+    axiosClient.post(endpoints.room.create, data),
+  
+  update: (id: number, data: UpdateRoomRequest) => 
     axiosClient.put(endpoints.room.update(id), data),
-  delete: (id: number) => axiosClient.delete(endpoints.room.delete(id)),
+  
+  delete: (id: number) => 
+    axiosClient.delete(endpoints.room.delete(id)),
+  
   uploadImage: (formData: FormData) =>
     axiosClient.post(endpoints.room.uploadImage, formData, {
       headers: {

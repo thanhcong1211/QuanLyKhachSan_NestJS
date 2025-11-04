@@ -36,7 +36,7 @@ export const endpoints = {
     getById: (id: number) => `/dat-phong/${id}`,
     create: '/dat-phong',
     update: (id: number) => `/dat-phong/${id}`,
-    delete: (id: number) => `/dat-phong/${id}`,
+    delete: (id: number) => `/dat-phong/${id}`, // Thử lại với path param
   },
   comment: {
     getAll: '/binh-luan',

@@ -1,4 +1,4 @@
-// ✅ Centralized localStorage management
+// Centralized localStorage management
 const TOKEN_KEY = "accessToken";
 
 export const storage = {

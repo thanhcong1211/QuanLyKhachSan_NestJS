@@ -4,9 +4,11 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import RoomCard from "@/components/RoomCard";
 import { Button } from "@/components/ui/button";
+import Pagination from "@/components/ui/pagination";
 import { roomApi } from "@/api/room.api";
 import { locationApi } from "@/api/location.api";
 import { useSearchForm } from "@/hooks/search/useSearchForm";
+import { usePagination } from "@/hooks/usePagination";
 import type { Room } from "@/types/room.type";
 import type { Location } from "@/types/location.type";
 import { Search, SlidersHorizontal, X, MapPin } from "lucide-react";
@@ -197,6 +199,20 @@ export default function SearchPage() {
   const hasActiveFilters = Object.values(filters).some((value) =>
     typeof value === "boolean" ? value : value !== ""
   );
+
+  // Sử dụng usePagination hook
+  const {
+    currentPage,
+    totalPages,
+    paginatedItems: paginatedRooms,
+    goToPage,
+    totalItems,
+    itemsPerPage,
+  } = usePagination({
+    items: filteredRooms,
+    itemsPerPage: 8,
+    dependencies: [searchTerm, filters, locationId],
+  });
 
   const handleLocationSelect = (location: Location) => {
     console.log("🎯 Selected location:", location);
@@ -562,17 +578,28 @@ export default function SearchPage() {
           </div>
         </div>
       ) : filteredRooms.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredRooms.map((room) => (
-            <div
-              key={room.id}
-              onClick={() => router.push(`/room/${room.id}`)}
-              className="cursor-pointer"
-            >
-              <RoomCard room={room} />
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {paginatedRooms.map((room) => (
+              <div
+                key={room.id}
+                onClick={() => router.push(`/room/${room.id}`)}
+                className="cursor-pointer"
+              >
+                <RoomCard room={room} />
+              </div>
+            ))}
+          </div>
+
+          {/* Pagination Component */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={goToPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+          />
+        </>
       ) : (
         <div className="text-center py-20">
           <h3 className="text-xl font-semibold text-gray-900 mb-2">

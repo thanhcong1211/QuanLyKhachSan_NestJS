@@ -22,5 +22,20 @@ export const bookingApi = {
   },
   update: (id: number, data: UpdateBookingRequest) =>
     axiosClient.put(endpoints.booking.update(id), data),
-  delete: (id: number) => axiosClient.delete(endpoints.booking.delete(id)),
+  delete: (id: number) => {
+    console.log('[bookingApi] Deleting booking with id:', id);
+    console.log('[bookingApi] DELETE URL:', endpoints.booking.delete(id));
+    return axiosClient.delete(endpoints.booking.delete(id))
+      .then((res) => {
+        console.log('[bookingApi] Delete SUCCESS response:', res);
+        return res;
+      })
+      .catch((err) => {
+        console.error('[bookingApi] Delete ERROR:', err);
+        console.error('[bookingApi] Error response:', err?.response);
+        console.error('[bookingApi] Error status:', err?.response?.status);
+        console.error('[bookingApi] Error data:', err?.response?.data);
+        throw err;
+      });
+  },
 };

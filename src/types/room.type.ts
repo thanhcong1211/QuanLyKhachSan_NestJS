@@ -43,4 +43,6 @@ export interface CreateRoomRequest {
   hinhAnh: string;
 }
 
-export type UpdateRoomRequest = Partial<CreateRoomRequest>;
+export interface UpdateRoomRequest extends CreateRoomRequest {
+  id: number;
+}
