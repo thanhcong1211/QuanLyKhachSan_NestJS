@@ -9,6 +9,15 @@ interface Props {
   roomId: number;
 }
 
+const AVATAR_COLORS = [
+  "bg-rose-500", "bg-orange-500", "bg-amber-500", "bg-emerald-500",
+  "bg-sky-500", "bg-indigo-500", "bg-purple-500", "bg-pink-500",
+];
+
+function avatarColor(id: number) {
+  return AVATAR_COLORS[id % AVATAR_COLORS.length];
+}
+
 export default function RoomReview({ roomId }: Props) {
   const { comments, isLoading, isError, error, refetch, createComment } = useComment(roomId);
 
@@ -105,14 +114,23 @@ export default function RoomReview({ roomId }: Props) {
       >
         {comments && comments.length > 0 ? (
           comments.map((c) => (
-            <div key={c.id} className="border-b pb-3 animate-fadeIn">
-              <div className="flex justify-between items-center">
-                <span className="font-medium">Người dùng #{c.maNguoiBinhLuan}</span>
-                <Rate disabled defaultValue={c.saoBinhLuan} />
+            <div key={c.id} className="flex gap-3 border-b border-gray-100 pb-4 last:border-0 animate-fadeIn">
+              <div
+                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white ${avatarColor(c.maNguoiBinhLuan)}`}
+              >
+                {c.nguoiBinhLuan?.name?.charAt(0)?.toUpperCase() || "K"}
               </div>
-              <p className="mt-1 text-gray-700">{c.noiDung}</p>
-              <div className="text-xs text-gray-500">
-                {new Date(c.ngayBinhLuan).toLocaleDateString("vi-VN")}
+              <div className="flex-1 min-w-0">
+                <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                  <span className="font-medium text-gray-900">
+                    {c.nguoiBinhLuan?.name || `Khách #${c.maNguoiBinhLuan}`}
+                  </span>
+                  <Rate disabled defaultValue={c.saoBinhLuan} className="text-sm" />
+                </div>
+                <p className="mt-1 text-gray-600 leading-relaxed">{c.noiDung}</p>
+                <div className="mt-1 text-xs text-gray-400">
+                  {new Date(c.ngayBinhLuan).toLocaleDateString("vi-VN")}
+                </div>
               </div>
             </div>
           ))
@@ -122,23 +140,23 @@ export default function RoomReview({ roomId }: Props) {
       </div>
 
       {/* 📝 Form nhập bình luận */}
-      <div className="border-t pt-4 sticky bottom-0 bg-white">
-        <h4 className="font-medium mb-2">Viết bình luận của bạn</h4>
+      <div className="border-t border-gray-100 pt-4 sticky bottom-0 bg-white">
+        <h4 className="font-medium text-gray-900 mb-2">Viết bình luận của bạn</h4>
         <Rate value={rating} onChange={(v) => setRating(v)} />
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
           rows={3}
           placeholder="Chia sẻ cảm nhận của bạn..."
-          className="w-full border rounded-lg p-3 mt-2 focus:ring-2 focus:ring-rose-500"
+          className="w-full border border-gray-200 rounded-xl p-3 mt-2 outline-none focus:ring-2 focus:ring-rose-500 focus:border-transparent transition"
         />
         <button
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className={`mt-3 flex items-center justify-center gap-2 px-5 py-2 rounded-lg transition ${
+          className={`mt-3 flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium transition ${
             isSubmitting
               ? "bg-gray-300 text-gray-600 cursor-wait"
-              : "bg-rose-500 text-white hover:bg-rose-600"
+              : "bg-rose-500 text-white hover:bg-rose-600 shadow-sm shadow-rose-500/30"
           }`}
         >
           {isSubmitting ? (

@@ -549,6 +549,7 @@
 	"userManagement": {
 		"title": "User Management",
 		"createButton": "Add user",
+		"totalCount": "Total: {count} users",
 		"table": {
 			"id": "ID",
 			"name": "Name",

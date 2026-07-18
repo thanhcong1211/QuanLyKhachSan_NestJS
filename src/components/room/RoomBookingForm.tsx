@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Star, Calendar, Users2 } from "lucide-react";
 import { useBooking } from "@/hooks/Booking/useBooking";
 import { useAppSelector } from "@/redux/hooks";
 import { message } from "antd";
@@ -49,55 +50,76 @@ export default function RoomBookingForm({ roomId, price }: { roomId: number; pri
   const subtotal = nights * price;
 
   return (
-    <div className="border rounded-lg p-4 shadow-md sticky top-24 bg-white">
-      <div className="flex items-center justify-between">
+    <div className="rounded-2xl border border-gray-200 shadow-lg shadow-gray-900/5 p-5 sticky top-24 bg-white">
+      <div className="flex items-baseline justify-between">
         <div>
-          <div className="text-2xl font-bold">{price.toLocaleString()} ₫</div>
-          <div className="text-sm text-gray-600">{t('perNight')}</div>
+          <span className="text-2xl font-bold text-gray-900">{price.toLocaleString()} ₫</span>
+          <span className="text-sm text-gray-500"> {t('perNight')}</span>
         </div>
-        <div className="text-sm text-gray-600">4.83 · 48 {t('reviews')}</div>
+        <div className="flex items-center gap-1 text-sm text-gray-700">
+          <Star size={14} className="fill-rose-500 text-rose-500" />
+          <span className="font-medium">4.83</span>
+          <span className="text-gray-400">· 48 {t('reviews')}</span>
+        </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        <input
-          type="date"
-          value={checkIn}
-          onChange={(e) => setCheckIn(e.target.value)}
-          className="border p-2 rounded-lg"
-          placeholder={t('checkIn')}
-        />
-        <input
-          type="date"
-          value={checkOut}
-          onChange={(e) => setCheckOut(e.target.value)}
-          className="border p-2 rounded-lg"
-          placeholder={t('checkOut')}
-        />
-      </div>
-
-      <div className="mt-3">
-        <select
-          value={guest}
-          onChange={(e) => setGuest(Number(e.target.value))}
-          className="w-full border p-2 rounded-lg"
-        >
-          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {t('guests')}</option>)}
-        </select>
+      <div className="mt-4 overflow-hidden rounded-xl border border-gray-300 divide-y divide-gray-300">
+        <div className="grid grid-cols-2 divide-x divide-gray-300">
+          <label className="p-2.5">
+            <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+              <Calendar size={12} /> {t('checkIn')}
+            </span>
+            <input
+              type="date"
+              value={checkIn}
+              onChange={(e) => setCheckIn(e.target.value)}
+              className="w-full bg-transparent text-sm text-gray-900 outline-none mt-0.5"
+            />
+          </label>
+          <label className="p-2.5">
+            <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+              <Calendar size={12} /> {t('checkOut')}
+            </span>
+            <input
+              type="date"
+              value={checkOut}
+              onChange={(e) => setCheckOut(e.target.value)}
+              className="w-full bg-transparent text-sm text-gray-900 outline-none mt-0.5"
+            />
+          </label>
+        </div>
+        <label className="block p-2.5">
+          <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">
+            <Users2 size={12} /> {t('guests')}
+          </span>
+          <select
+            value={guest}
+            onChange={(e) => setGuest(Number(e.target.value))}
+            className="w-full bg-transparent text-sm text-gray-900 outline-none mt-0.5"
+          >
+            {[1,2,3,4,5].map(n => <option key={n} value={n}>{n} {t('guests')}</option>)}
+          </select>
+        </label>
       </div>
 
       <button
         onClick={handleBook}
-        className="mt-4 w-full bg-rose-500 hover:bg-rose-600 text-white font-semibold py-3 rounded-lg transition"
+        className="mt-4 w-full bg-rose-500 hover:bg-rose-600 active:scale-[0.99] text-white font-semibold py-3 rounded-xl transition shadow-sm shadow-rose-500/30 disabled:opacity-60 disabled:pointer-events-none"
         disabled={bookRoom.isPending}
       >
         {bookRoom.isPending ? t('bookingInProgress') : t('bookButton')}
       </button>
 
-      <div className="mt-3 text-sm text-gray-600">
-        <div>{t('estimatedTotal')}</div>
+      <div className="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500 space-y-2">
         <div className="flex items-center justify-between">
-          <div>{price.toLocaleString()} ₫ x {nights} {t('nights')}</div>
-          <div className="font-medium">{subtotal.toLocaleString()} ₫</div>
+          <span className="underline decoration-dotted underline-offset-2">
+            {price.toLocaleString()} ₫ x {nights} {t('nights')}
+          </span>
+          <span className="text-gray-700">{subtotal.toLocaleString()} ₫</span>
+        </div>
+        <div className="flex items-center justify-between pt-2 border-t border-gray-100 font-semibold text-gray-900">
+          <span>{t('estimatedTotal')}</span>
+          <span>{subtotal.toLocaleString()} ₫</span>
         </div>
       </div>
     </div>

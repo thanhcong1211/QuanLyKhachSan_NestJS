@@ -547,6 +547,7 @@
 	"userManagement": {
 		"title": "Quản lý Người dùng",
 		"createButton": "Thêm người dùng",
+		"totalCount": "Tổng: {count} người dùng",
 		"table": {
 			"id": "ID",
 			"name": "Tên",
