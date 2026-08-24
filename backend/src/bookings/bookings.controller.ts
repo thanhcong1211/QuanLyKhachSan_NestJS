@@ -13,12 +13,14 @@ import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { AuthGuard } from '../common/guards/auth.guard';
+import { AdminGuard } from '../common/guards/admin.guard';
 
 @Controller('dat-phong')
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 
   @Get()
+  @UseGuards(AdminGuard)
   findAll() {
     return this.bookingsService.findAll();
   }
