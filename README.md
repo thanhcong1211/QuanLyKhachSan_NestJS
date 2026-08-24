@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quản Lý Khách Sạn (Airbnb Clone) — FullStack
 
-## Getting Started
+Hệ thống quản lý đặt phòng khách sạn trực tuyến, mô phỏng theo Airbnb: tìm kiếm/lọc phòng, đặt phòng, quản lý người dùng, bình luận đánh giá, dashboard thống kê cho admin, hỗ trợ đa ngôn ngữ (Việt/Anh).
 
-First, run the development server:
+Repo là **monorepo** gồm 2 phần độc lập:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+.
+├── frontend/   # Next.js 16 + React 18 + TypeScript
+└── backend/    # NestJS + TypeORM + MySQL
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Công nghệ chính
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| | |
+|---|---|
+| **Frontend** | Next.js (App Router, Turbopack), React 18, TypeScript, Ant Design, Tailwind CSS, Redux Toolkit, TanStack Query, next-intl (i18n) |
+| **Backend** | NestJS, TypeORM, MySQL, JWT Auth, Multer (upload ảnh) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Chạy nhanh
 
-## Learn More
+### 1. Backend
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd backend
+docker compose up -d       # khởi động MySQL
+npm install
+npm run seed                # tạo dữ liệu mẫu (user admin, vị trí, phòng, booking...)
+npm run start:dev           # http://localhost:3001/api
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tài khoản admin mẫu sau khi seed: `admin@airbnb-clone.local` / `Admin@123`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Chi tiết cấu trúc backend, các resource (auth, users, locations, rooms, bookings, comments...): xem [backend/README.md](backend/README.md).
 
-## Deploy on Vercel
+### 2. Frontend
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+cd frontend
+npm install
+npm run dev                 # http://localhost:3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Đảm bảo `frontend/.env.local` trỏ đúng backend:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:3001/api
+```
+
+## Tính năng chính
+
+- Quản lý phòng cho thuê (CRUD, upload ảnh, phân loại theo vị trí)
+- Tìm kiếm & lọc phòng theo giá, vị trí, số khách, tiện ích
+- Đặt phòng theo ngày check-in/check-out, quản lý booking (user + admin)
+- Xác thực JWT, quản lý hồ sơ, lịch sử đặt phòng cá nhân
+- Bình luận & đánh giá sao cho từng phòng
+- Dashboard admin: thống kê doanh thu, biểu đồ booking
+- Đa ngôn ngữ: Tiếng Việt / English
